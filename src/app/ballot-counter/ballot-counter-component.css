@@ -1,0 +1,9 @@
+.number-disk{
+    width: 1em;
+    height: 1em;
+    text-align: center;
+    line-height: 0.9;
+    font-size: 3em;
+    border-radius: 3px;
+    border: 1px solid black;
+}

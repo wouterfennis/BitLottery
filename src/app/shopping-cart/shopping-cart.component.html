@@ -1,0 +1,44 @@
+<bl-navbar></bl-navbar>
+<div class="container mt-4">
+
+  <div class="row">
+    <div class="col-6">
+      <h2>Your shopping cart
+        <i class="fas fa-box-open"></i>
+      </h2>
+    </div>
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Image</th>
+                <th scope="col">Title</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let product of products">
+                <td>
+                  <img class="cart-item-image" src="{{product.image}}">
+                </td>
+                <td>{{product.title}}</td>
+                <td>{{product.amount}}</td>
+                <td>{{product.price}}</td>
+              </tr>
+              <tr>
+                  <td></td>
+                  <td></td>
+                  <td>Total price:</td>
+                  <td>{{totalPrice}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<bl-footer></bl-footer>
