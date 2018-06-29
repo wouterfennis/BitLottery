@@ -1,0 +1,87 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2003
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 UI", "1 UI", "{CAB61AFA-7F4F-4293-8D3A-A19E9C78B827}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AngularFrontEnd", "AngularFrontEnd\AngularFrontEnd.csproj", "{3D539F9B-98B4-4144-BBF3-F95E48B1A3AF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 Entities", "3 Entities", "{EB67A4C2-618C-4D7A-B742-08BB01BA222B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 Api", "2 Api", "{FAB8C196-C9BE-4B7B-8C54-957F38EB45C4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 Business", "4 Business", "{6DF741D5-85EC-42E0-8EDA-F5558F47F2D5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5 Data Access", "5 Data Access", "{F01CD7D8-4F76-4008-A050-F52997D253AE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitLottery.Business", "BitLottery.Business\BitLottery.Business.csproj", "{778785D1-E01C-4900-A211-3179BBC85678}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitLottery.Entities", "BitLottery.Entities\BitLottery.Entities.csproj", "{AB572BE6-7488-4D4E-940B-51DDE0CBD3A0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitLottery.Database", "BitLottery.Database\BitLottery.Database.csproj", "{9A8BEF89-97FA-41A1-9ACD-AF3005437041}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitLottery.Database.UnitTests", "BitLottery.Database.UnitTests\BitLottery.Database.UnitTests.csproj", "{48343F2C-7A3B-42E6-967F-D57A852331D0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitLottery.Api", "BitLottery.Api\BitLottery.Api.csproj", "{A946F72F-100F-4E79-8160-F61EDA81FEE5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitLottery.RandomService", "BitLottery.Random\BitLottery.RandomService.csproj", "{1E23579B-3E43-4244-A26E-E42B6247F9F3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitLottery.RandomService.UnitTests", "BitLottery.Random.UnitTests\BitLottery.RandomService.UnitTests.csproj", "{45123059-3B65-4383-8505-E4D64AB78EAD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3D539F9B-98B4-4144-BBF3-F95E48B1A3AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D539F9B-98B4-4144-BBF3-F95E48B1A3AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D539F9B-98B4-4144-BBF3-F95E48B1A3AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D539F9B-98B4-4144-BBF3-F95E48B1A3AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{778785D1-E01C-4900-A211-3179BBC85678}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{778785D1-E01C-4900-A211-3179BBC85678}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{778785D1-E01C-4900-A211-3179BBC85678}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{778785D1-E01C-4900-A211-3179BBC85678}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB572BE6-7488-4D4E-940B-51DDE0CBD3A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB572BE6-7488-4D4E-940B-51DDE0CBD3A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB572BE6-7488-4D4E-940B-51DDE0CBD3A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB572BE6-7488-4D4E-940B-51DDE0CBD3A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A8BEF89-97FA-41A1-9ACD-AF3005437041}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A8BEF89-97FA-41A1-9ACD-AF3005437041}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A8BEF89-97FA-41A1-9ACD-AF3005437041}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A8BEF89-97FA-41A1-9ACD-AF3005437041}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48343F2C-7A3B-42E6-967F-D57A852331D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48343F2C-7A3B-42E6-967F-D57A852331D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48343F2C-7A3B-42E6-967F-D57A852331D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48343F2C-7A3B-42E6-967F-D57A852331D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A946F72F-100F-4E79-8160-F61EDA81FEE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A946F72F-100F-4E79-8160-F61EDA81FEE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A946F72F-100F-4E79-8160-F61EDA81FEE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A946F72F-100F-4E79-8160-F61EDA81FEE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E23579B-3E43-4244-A26E-E42B6247F9F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E23579B-3E43-4244-A26E-E42B6247F9F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E23579B-3E43-4244-A26E-E42B6247F9F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E23579B-3E43-4244-A26E-E42B6247F9F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45123059-3B65-4383-8505-E4D64AB78EAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45123059-3B65-4383-8505-E4D64AB78EAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45123059-3B65-4383-8505-E4D64AB78EAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45123059-3B65-4383-8505-E4D64AB78EAD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3D539F9B-98B4-4144-BBF3-F95E48B1A3AF} = {CAB61AFA-7F4F-4293-8D3A-A19E9C78B827}
+		{778785D1-E01C-4900-A211-3179BBC85678} = {6DF741D5-85EC-42E0-8EDA-F5558F47F2D5}
+		{AB572BE6-7488-4D4E-940B-51DDE0CBD3A0} = {EB67A4C2-618C-4D7A-B742-08BB01BA222B}
+		{9A8BEF89-97FA-41A1-9ACD-AF3005437041} = {F01CD7D8-4F76-4008-A050-F52997D253AE}
+		{48343F2C-7A3B-42E6-967F-D57A852331D0} = {F01CD7D8-4F76-4008-A050-F52997D253AE}
+		{A946F72F-100F-4E79-8160-F61EDA81FEE5} = {FAB8C196-C9BE-4B7B-8C54-957F38EB45C4}
+		{1E23579B-3E43-4244-A26E-E42B6247F9F3} = {F01CD7D8-4F76-4008-A050-F52997D253AE}
+		{45123059-3B65-4383-8505-E4D64AB78EAD} = {F01CD7D8-4F76-4008-A050-F52997D253AE}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CA94E2AC-5E75-4766-BDBB-199516041425}
+	EndGlobalSection
+EndGlobal
