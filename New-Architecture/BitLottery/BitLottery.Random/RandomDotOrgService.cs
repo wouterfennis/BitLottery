@@ -35,6 +35,19 @@ namespace BitLottery.RandomService
 
     public async System.Threading.Tasks.Task<IEnumerable<int>> GenerateRandomNumbersAsync(Settings settings)
     {
+      var requestBuilder = new RequestBuilder();
+      var request1 = requestBuilder
+        .AddJsonRpc("2.0")
+        .AddMethod("generateIntegers")
+        .AddApiKey()
+        .AddNumberOfIntegers()
+        .AddMinimalValue()
+        .AddMaximumValue()
+        .AddReplacement()
+        .AddBase(10)
+        .AddId()
+        .Build();
+        
       var request = new GenerateIntegersRequest()
       {
         jsonrpc = "2.0",
