@@ -2,7 +2,6 @@ using BitLottery.RandomService.HttpClientWrapper;
 using BitLottery.RandomService.Models;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
@@ -20,9 +19,8 @@ namespace BitLottery.RandomService
     {
       _httpClient = httpClientWrapper;
 
-      var c = Directory.GetCurrentDirectory();
+      var currentDirectory = Directory.GetCurrentDirectory();
 
-      // Read configuration
       var config = new ConfigurationBuilder()
                   .SetBasePath(Directory.GetCurrentDirectory())
                   .AddJsonFile("appsettings.json", true, true)
@@ -35,35 +33,19 @@ namespace BitLottery.RandomService
 
     public async System.Threading.Tasks.Task<IEnumerable<int>> GenerateRandomNumbersAsync(Settings settings)
     {
-      var requestBuilder = new RequestBuilder();
-      var request1 = requestBuilder
+      var requestBuilder = new GenerateIntegersRequestBuilder();
+      GenerateIntegersRequest request = requestBuilder
         .AddJsonRpc("2.0")
         .AddMethod("generateIntegers")
-        .AddApiKey()
-        .AddNumberOfIntegers()
-        .AddMinimalValue()
-        .AddMaximumValue()
-        .AddReplacement()
+        .AddApiKey(_apiKey)
+        .AddNumberOfIntegers(settings.NumberOfIntegers)
+        .AddMinimalValue(settings.MinimalIntValue)
+        .AddMaximumValue(settings.MaximumIntValue)
+        .AddReplacement(true)
         .AddBase(10)
-        .AddId()
+        .AddId(1)
         .Build();
         
-      var request = new GenerateIntegersRequest()
-      {
-        jsonrpc = "2.0",
-        method = "generateIntegers",
-        @params = new GenerateIntegerParams
-        {
-          apiKey = _apiKey,
-          n = settings.NumberOfIntegers,
-          min = settings.MinimalIntValue,
-          max = settings.MaximumIntValue,
-          replacement = true,
-          @base = 10
-        },
-        id = 1
-      };
-
       string json = JsonConvert.SerializeObject(request);
       var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
 
