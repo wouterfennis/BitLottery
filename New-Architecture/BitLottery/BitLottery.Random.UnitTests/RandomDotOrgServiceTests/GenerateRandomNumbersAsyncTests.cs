@@ -1,5 +1,6 @@
 using BitLottery.RandomService.HttpClientWrapper;
 using BitLottery.RandomService.Models;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace BitLottery.RandomService.UnitTests.RandomDotOrgServiceTests
     public async Task GenerateRandomNumbersAsync_CreatesCorrectRequestAsync()
     {
       // Arrange
+      var expectedData = new List<int> { 2, 5, 1, 1, 5, 7, 9, 7, 10, 10 };
       string expectedJsonResponse = "{\"jsonrpc\":\"2.0\",\"result\":{\"random\":{\"data\":[2,5,1,1,5,7,9,7,10,10],\"completionTime\":\"2018 - 06 - 30 08:20:20Z\"},\"bitsUsed\":33,\"bitsLeft\":1876795,\"requestsLeft\":394736,\"advisoryDelay\":1070},\"id\":27964}";
       var expectedHttpResponseMessage = new HttpResponseMessage
       {
@@ -41,8 +43,8 @@ namespace BitLottery.RandomService.UnitTests.RandomDotOrgServiceTests
       IEnumerable<int> result = await randomService.GenerateRandomNumbersAsync(settings);
 
       // Assert
-      result.Shou
-
+      result.Should().Equal(expectedData);
+      httpClientWrapperMock.VerifyAll();
     }
   }
 }
