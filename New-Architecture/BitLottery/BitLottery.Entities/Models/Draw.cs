@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -17,7 +17,7 @@ namespace BitLottery.Models
         /// <summary>
         /// The date the draw takes place
         /// </summary>
-        public DateTime DrawDate { get; set; }
+        public DateTime? DrawDate { get; set; }
 
         /// <summary>
         /// The ballots associated with the draw
