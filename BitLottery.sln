@@ -3,10 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2003
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 UI", "1 UI", "{CAB61AFA-7F4F-4293-8D3A-A19E9C78B827}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AngularFrontEnd", "AngularFrontEnd\AngularFrontEnd.csproj", "{3D539F9B-98B4-4144-BBF3-F95E48B1A3AF}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 Entities", "3 Entities", "{EB67A4C2-618C-4D7A-B742-08BB01BA222B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 Api", "2 Api", "{FAB8C196-C9BE-4B7B-8C54-957F38EB45C4}"
@@ -31,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitLottery.RandomService.Un
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bitlottery.Business.UnitTests", "Bitlottery.Business.UnitTests\Bitlottery.Business.UnitTests.csproj", "{98CF03A9-1B1A-467E-9FFA-D7BAC21BF9FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BitLottery.Api.UnitTests", "BitLottery.Api.UnitTest\BitLottery.Api.UnitTests.csproj", "{453D93FD-321C-49B0-BB1B-749A578DD8A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitLottery.Api.UnitTests", "BitLottery.Api.UnitTest\BitLottery.Api.UnitTests.csproj", "{453D93FD-321C-49B0-BB1B-749A578DD8A5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,10 +35,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3D539F9B-98B4-4144-BBF3-F95E48B1A3AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3D539F9B-98B4-4144-BBF3-F95E48B1A3AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3D539F9B-98B4-4144-BBF3-F95E48B1A3AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3D539F9B-98B4-4144-BBF3-F95E48B1A3AF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{778785D1-E01C-4900-A211-3179BBC85678}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{778785D1-E01C-4900-A211-3179BBC85678}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{778785D1-E01C-4900-A211-3179BBC85678}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -84,7 +76,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{3D539F9B-98B4-4144-BBF3-F95E48B1A3AF} = {CAB61AFA-7F4F-4293-8D3A-A19E9C78B827}
 		{778785D1-E01C-4900-A211-3179BBC85678} = {6DF741D5-85EC-42E0-8EDA-F5558F47F2D5}
 		{AB572BE6-7488-4D4E-940B-51DDE0CBD3A0} = {EB67A4C2-618C-4D7A-B742-08BB01BA222B}
 		{9A8BEF89-97FA-41A1-9ACD-AF3005437041} = {F01CD7D8-4F76-4008-A050-F52997D253AE}
