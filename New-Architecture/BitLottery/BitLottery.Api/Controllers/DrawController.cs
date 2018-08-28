@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BitLottery.Api.Models;
 using BitLottery.Business;
 using BitLottery.Controllers;
 using BitLottery.Database;
@@ -23,9 +24,9 @@ namespace BitLottery.Api.Controllers
     }
 
     [HttpPost]
-    public async Task<int> GenerateDraw()
+    public async Task<int> GenerateDraw(DrawConfiguration drawConfiguration)
     {
-      Draw draw = await _lottery.GenerateDrawAsync();
+      Draw draw = await _lottery.GenerateDrawAsync(drawConfiguration.DrawDate, drawConfiguration.NumberOfBallots);
       int drawId = _drawRepository.Insert(draw);
       return drawId;
     }

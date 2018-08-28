@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using BitLottery.Api.Models;
 using BitLottery.Models;
 
 namespace BitLottery.Controllers
@@ -11,7 +12,7 @@ namespace BitLottery.Controllers
     /// <summary>
     /// Creates a new draw
     /// </summary>
-    Task<int> GenerateDraw();
+    Task<int> GenerateDraw(DrawConfiguration drawConfiguration);
 
     /// <summary>
     /// Retrieves a specific draw

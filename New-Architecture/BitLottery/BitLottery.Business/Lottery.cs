@@ -14,9 +14,10 @@ namespace BitLottery.Business
   {
     private readonly IRandomGenerator _randomGenerator;
     private readonly IRandomWrapper _randomWrapper;
-    private int _numberOfBallotsInDraw;
     private int _minimalLengthOfBallotNumber;
     private int _maximumLengthOfBallotNumber;
+    private int _minimalLengthOfSeed;
+    private int _maximumLengthOfSeed;
 
     public Lottery(IRandomGenerator randomGenerator, IRandomWrapper randomWrapper)
     {
@@ -29,29 +30,31 @@ namespace BitLottery.Business
             .Build();
 
       var appsettings = config.GetSection("appsettings");
-      _numberOfBallotsInDraw = Int32.Parse(appsettings["NumberOfBallotsInDraw"]);
-      _minimalLengthOfBallotNumber = Int32.Parse(appsettings["MinimalLengthOfBallotNumber"]);
-      _maximumLengthOfBallotNumber = Int32.Parse(appsettings["MaximumLengthOfBallotNumber"]);
+      _minimalLengthOfSeed = int.Parse(appsettings["MinimalLengthOfSeed"]);
+      _maximumLengthOfSeed = int.Parse(appsettings["MaximumLengthOfSeed"]);
+      _maximumLengthOfBallotNumber = int.Parse(appsettings["MaximumLengthOfBallotNumber"]);
+      _maximumLengthOfBallotNumber = int.Parse(appsettings["MaximumLengthOfBallotNumber"]);
     }
 
-    public async Task<Draw> GenerateDrawAsync()
+    public async Task<Draw> GenerateDrawAsync(DateTime drawDate, int numberOfBallots)
     {
-      IEnumerable<Ballot> ballots = await GenerateBallotsAsync();
+      IEnumerable<Ballot> ballots = await GenerateBallotsAsync(numberOfBallots);
       var draw = new Draw
       {
+        DrawDate = drawDate,
         Ballots = ballots
       };
 
       return draw;
     }
 
-    private async Task<IEnumerable<Ballot>> GenerateBallotsAsync()
+    private async Task<IEnumerable<Ballot>> GenerateBallotsAsync(int numberOfBallots)
     {
       var settings = new GenerationSettings
       {
         NumberOfIntegers = 1,
-        MinimalIntValue = _minimalLengthOfBallotNumber,
-        MaximumIntValue = _maximumLengthOfBallotNumber
+        MinimalIntValue = _minimalLengthOfSeed,
+        MaximumIntValue = _maximumLengthOfSeed
       };
 
       IEnumerable<int> randomNumbers = await _randomGenerator.GenerateRandomNumbersAsync(settings);
@@ -60,9 +63,9 @@ namespace BitLottery.Business
       _randomWrapper.Seed(seed);
 
       var ballots = new List<Ballot>();
-      for (int i = 0; i < _numberOfBallotsInDraw; i++)
+      for (int i = 0; i < numberOfBallots; i++)
       {
-        int ballotNumber = _randomWrapper.Next(10000, 99999);
+        int ballotNumber = _randomWrapper.Next(_minimalLengthOfBallotNumber, _maximumLengthOfBallotNumber);
 
         var ballot = new Ballot
         {

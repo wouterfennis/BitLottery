@@ -1,15 +1,15 @@
-﻿using BitLottery.Models;
-using System.Collections.Generic;
+using BitLottery.Models;
+using System;
 using System.Threading.Tasks;
 
 namespace BitLottery.Business
 {
-    public interface ILottery
+  public interface ILottery
     {
         /// <summary>
         /// Generate and persist a new draw
         /// </summary>
-        Task<Draw> GenerateDrawAsync();
+        Task<Draw> GenerateDrawAsync(DateTime drawDate, int numberOfBallots);
 
         /// <summary>
         /// Retieves ballots from a specific draw with an optional search filter

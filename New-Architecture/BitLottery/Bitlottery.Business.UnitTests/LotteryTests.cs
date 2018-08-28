@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using BitLottery.Business.RandomWrapper;
 using System.Linq;
+using System;
 
 namespace Bitlottery.Business.UnitTests
 {
@@ -32,6 +33,8 @@ namespace Bitlottery.Business.UnitTests
     {
       // Arrange
       int expectedSeed = 1;
+      DateTime expectedDrawDate = new DateTime(2018, 1, 1);
+      int expectedNumberOfBallots = 222;
       var expectedRandomNumbers = new List<int> { expectedSeed };
       var expectedBallotNumber = 12345;
 
@@ -48,23 +51,23 @@ namespace Bitlottery.Business.UnitTests
         .Setup(mock => mock.Seed(expectedSeed));
 
       _randomWrapperMock
-        .Setup(mock => mock.Next(10000, 99999))
+        .Setup(mock => mock.Next(0, 10000000))
         .Returns(expectedBallotNumber);
 
       // Act
-      Draw draw = await _lottery.GenerateDrawAsync();
+      Draw draw = await _lottery.GenerateDrawAsync(expectedDrawDate, expectedNumberOfBallots);
 
       // Assert
       draw.Should().NotBeNull();
       draw.Ballots.Should().NotBeNull();
-      draw.Ballots.Should().HaveCount(100);
+      draw.Ballots.Should().HaveCount(222);
       draw.Ballots.Should();
 
       Ballot firstBallot = draw.Ballots.First();
       firstBallot.Number.Should().Be(expectedBallotNumber);
       firstBallot.SellDate.Should().BeNull();
 
-      draw.DrawDate.Should().BeNull();
+      draw.DrawDate.Should().Be(expectedDrawDate);
 
       actualGenerationSettings.Should().NotBeNull();
       actualGenerationSettings.NumberOfIntegers.Should().Be(1);

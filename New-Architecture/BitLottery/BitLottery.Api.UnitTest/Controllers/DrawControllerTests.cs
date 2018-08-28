@@ -1,10 +1,13 @@
 using BitLottery.Api.Controllers;
+using BitLottery.Api.Models;
 using BitLottery.Business;
 using BitLottery.Database;
 using BitLottery.Models;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using System;
+using System.Collections.Generic;
 
 namespace BitLottery.Api.UnitTests
 {
@@ -28,22 +31,31 @@ namespace BitLottery.Api.UnitTests
     public async System.Threading.Tasks.Task GenerateDraw_CallsBusinessLayer_CallsRepositoryLayerAsync()
     {
       // Arrange
+      DateTime expectedDrawDate = new DateTime(2018, 1, 1);
+      int expectedNumberOfBallots = 10;
       int expectedId = 222;
       var expectedDraw = new Draw
       {
         Id = expectedId,
-        DrawDate = new System.DateTime(2018, 1, 1)
+        DrawDate = expectedDrawDate,
+        Ballots = new List<Ballot>()
       };
 
       lotteryMock
-        .Setup(mock => mock.GenerateDrawAsync())
+        .Setup(mock => mock.GenerateDrawAsync(expectedDrawDate, expectedNumberOfBallots))
         .ReturnsAsync(expectedDraw);
 
       repositoryMock.Setup(mock => mock.Insert(expectedDraw))
         .Returns(expectedId);
 
+      var drawConfiguration = new DrawConfiguration
+      {
+        DrawDate = expectedDrawDate,
+        NumberOfBallots = expectedNumberOfBallots
+      };
+
       // Act
-      int result = await drawController.GenerateDraw();
+      int result = await drawController.GenerateDraw(drawConfiguration);
 
       // Assert
       result.Should().Be(expectedId);
