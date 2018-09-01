@@ -12,8 +12,8 @@ namespace BitLottery.Business
         Task<Draw> GenerateDrawAsync(DateTime drawDate, int numberOfBallots);
 
         /// <summary>
-        /// Retieves ballots from a specific draw with an optional search filter
+        /// Picks a random ballot from a Draw and registers it as sold
         /// </summary>
-        void RetrieveBallots(int drawId, BallotFilter? ballotFilter);
+        Task<Ballot> SellBallotAsync(Draw draw);
     }
 }

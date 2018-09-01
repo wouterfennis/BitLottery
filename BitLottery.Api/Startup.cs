@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BitLottery.Business;
+﻿using BitLottery.Business;
 using BitLottery.Business.RandomGenerator;
 using BitLottery.Database;
 using BitLottery.Models;
@@ -12,8 +8,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace BitLottery.Api
 {
@@ -30,9 +24,16 @@ namespace BitLottery.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            // Business
             services.AddTransient<ILottery, Lottery>();
             services.AddTransient<IRandomGenerator, RandomGenerator>();
+
+            // Repositories
             services.AddTransient<IRepository<Draw, int>, DrawRepository>();
+            services.AddTransient<IRepository<Ballot, int>, BallotRepository>();
+
+            // Services
             services.AddTransient<IRandomService, RandomDotOrgService>();
             services.AddTransient<IHttpClientWrapper, HttpClientWrapper>();
 
