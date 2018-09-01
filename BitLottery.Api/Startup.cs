@@ -1,5 +1,6 @@
 ﻿using BitLottery.Business;
 using BitLottery.Business.RandomGenerator;
+using BitLottery.Business.RandomWrapper;
 using BitLottery.Database;
 using BitLottery.Models;
 using BitLottery.RandomService;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace BitLottery.Api
 {
@@ -28,6 +30,7 @@ namespace BitLottery.Api
             // Business
             services.AddTransient<ILottery, Lottery>();
             services.AddTransient<IRandomGenerator, RandomGenerator>();
+            services.AddTransient<IRandomWrapper, RandomWrapper>();
 
             // Repositories
             services.AddTransient<IRepository<Draw, int>, DrawRepository>();
@@ -38,6 +41,12 @@ namespace BitLottery.Api
             services.AddTransient<IHttpClientWrapper, HttpClientWrapper>();
 
             services.AddDbContext<BitLotteryContext>();
+
+            // Register the Swagger generator, defining 1 or more Swagger documents
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,6 +56,16 @@ namespace BitLottery.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
 
             app.UseMvc();
         }

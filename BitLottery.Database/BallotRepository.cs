@@ -1,5 +1,5 @@
 ﻿using BitLottery.Models;
-using System;
+using System.Linq;
 
 namespace BitLottery.Database
 {
@@ -28,7 +28,8 @@ namespace BitLottery.Database
 
         public Ballot Get(int key)
         {
-            return _context.Ballots.Find(key);
+            return _context.Ballots
+                .SingleOrDefault(ballot => ballot.Id == key);
         }
 
         public int Insert(Ballot entity)

@@ -7,7 +7,7 @@ namespace BitLottery.Database
     {
         public BitLotteryContext()
         {
-            Database.EnsureDeleted();
+            //Database.EnsureDeleted();
             Database.EnsureCreated();
         }
 
