@@ -25,9 +25,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitLottery.RandomService", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitLottery.RandomService.UnitTests", "BitLottery.Random.UnitTests\BitLottery.RandomService.UnitTests.csproj", "{45123059-3B65-4383-8505-E4D64AB78EAD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bitlottery.Business.UnitTests", "Bitlottery.Business.UnitTests\Bitlottery.Business.UnitTests.csproj", "{98CF03A9-1B1A-467E-9FFA-D7BAC21BF9FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitLottery.Business.UnitTests", "Bitlottery.Business.UnitTests\BitLottery.Business.UnitTests.csproj", "{98CF03A9-1B1A-467E-9FFA-D7BAC21BF9FC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitLottery.Api.UnitTests", "BitLottery.Api.UnitTest\BitLottery.Api.UnitTests.csproj", "{453D93FD-321C-49B0-BB1B-749A578DD8A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BitLottery.Entities.UnitTests", "BitLottery.Entities.UnitTests\BitLottery.Entities.UnitTests.csproj", "{5954C91C-EB62-4CBC-888B-31AFDD2BC2AB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6 Utilities", "6 Utilities", "{A1976DA6-D70F-46A2-9387-3A7DC99E246E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BitLottery.Utilities", "BitLottery.Utilities\BitLottery.Utilities.csproj", "{BD2505D4-AE9F-4DD7-9ECD-423E963E314C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +77,14 @@ Global
 		{453D93FD-321C-49B0-BB1B-749A578DD8A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{453D93FD-321C-49B0-BB1B-749A578DD8A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{453D93FD-321C-49B0-BB1B-749A578DD8A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5954C91C-EB62-4CBC-888B-31AFDD2BC2AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5954C91C-EB62-4CBC-888B-31AFDD2BC2AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5954C91C-EB62-4CBC-888B-31AFDD2BC2AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5954C91C-EB62-4CBC-888B-31AFDD2BC2AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD2505D4-AE9F-4DD7-9ECD-423E963E314C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD2505D4-AE9F-4DD7-9ECD-423E963E314C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD2505D4-AE9F-4DD7-9ECD-423E963E314C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD2505D4-AE9F-4DD7-9ECD-423E963E314C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -85,6 +99,8 @@ Global
 		{45123059-3B65-4383-8505-E4D64AB78EAD} = {F01CD7D8-4F76-4008-A050-F52997D253AE}
 		{98CF03A9-1B1A-467E-9FFA-D7BAC21BF9FC} = {6DF741D5-85EC-42E0-8EDA-F5558F47F2D5}
 		{453D93FD-321C-49B0-BB1B-749A578DD8A5} = {FAB8C196-C9BE-4B7B-8C54-957F38EB45C4}
+		{5954C91C-EB62-4CBC-888B-31AFDD2BC2AB} = {EB67A4C2-618C-4D7A-B742-08BB01BA222B}
+		{BD2505D4-AE9F-4DD7-9ECD-423E963E314C} = {A1976DA6-D70F-46A2-9387-3A7DC99E246E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CA94E2AC-5E75-4766-BDBB-199516041425}

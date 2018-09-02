@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace BitLottery.Database
 {
-    public class BallotRepository : IRepository<Ballot, int>
+    public class BallotRepository : IBallotRepository 
     {
         private readonly BitLotteryContext _context;
 

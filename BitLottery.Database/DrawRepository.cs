@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace BitLottery.Database
 {
-    public class DrawRepository : IRepository<Draw, int>
+    public class DrawRepository : IDrawRepository
     {
         private readonly BitLotteryContext _context;
 

@@ -4,6 +4,10 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
 
     <IsPackable>false</IsPackable>
+
+    <AssemblyName>BitLottery.Business.UnitTests</AssemblyName>
+
+    <RootNamespace>BitLottery.Business.UnitTests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BitLottery.Business\BitLottery.Business.csproj" />
+    <ProjectReference Include="..\BitLottery.Utilities\BitLottery.Utilities.csproj" />
   </ItemGroup>
 
   <ItemGroup>

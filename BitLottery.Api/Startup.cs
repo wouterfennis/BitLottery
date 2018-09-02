@@ -33,8 +33,8 @@ namespace BitLottery.Api
             services.AddTransient<IRandomWrapper, RandomWrapper>();
 
             // Repositories
-            services.AddTransient<IRepository<Draw, int>, DrawRepository>();
-            services.AddTransient<IRepository<Ballot, int>, BallotRepository>();
+            services.AddTransient<IDrawRepository, DrawRepository>();
+            services.AddTransient<IBallotRepository, BallotRepository>();
 
             // Services
             services.AddTransient<IRandomService, RandomDotOrgService>();

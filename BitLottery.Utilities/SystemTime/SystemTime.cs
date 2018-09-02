@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BitLottery.Business.SystemTime
+namespace BitLottery.Utilities.SystemTime
 {
     public static class SystemTime
     {

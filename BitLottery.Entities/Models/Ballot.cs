@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BitLottery.Utilities.SystemTime;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace BitLottery.Models
@@ -20,5 +21,10 @@ namespace BitLottery.Models
         /// The ballot number
         /// </summary>
         public int Number { get; set; }
+
+        public void Sell()
+        {
+            SellDate = SystemTime.Now();
+        }
     }
 }

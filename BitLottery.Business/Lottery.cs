@@ -1,6 +1,8 @@
+using BitLottery.Business.Exceptions;
 using BitLottery.Business.RandomGenerator;
 using BitLottery.Business.RandomWrapper;
 using BitLottery.Models;
+using BitLottery.Utilities.SystemTime;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -93,21 +95,38 @@ namespace BitLottery.Business
 
         public async Task<Ballot> SellBallotAsync(Draw draw)
         {
-            int numberOfBallots = draw.Ballots.Count();
+            
+            var unsoldBallots = draw.GetUnsoldBallots();
+            int numberOfUnsoldBallots = unsoldBallots.Count();
+            ValidateDraw(draw, numberOfUnsoldBallots);
 
             var generationSettings = new GenerationSettings
             {
                 NumberOfIntegers = 1,
                 MinimalIntValue = 0,
-                MaximumIntValue = numberOfBallots - 1
+                MaximumIntValue = numberOfUnsoldBallots - 1
             };
 
             IEnumerable<int> randomNumbers = await _randomGenerator.GenerateRandomNumbersAsync(generationSettings);
             int randomIndex = randomNumbers.Single();
 
             var pickedBallot = draw.Ballots.ElementAt(randomIndex);
-            pickedBallot.SellDate = SystemTime.SystemTime.Now();
+            pickedBallot.Sell();
             return pickedBallot;
+        }
+
+        private void ValidateDraw(Draw draw, int numberOfUnsoldBallots)
+        {
+            var sellDate = SystemTime.Now();
+            if (sellDate > draw.DrawDate)
+            {
+                throw new DrawException($"The SellDate: { sellDate } cannot be after the DrawDate: { draw.DrawDate}");
+            }
+
+            if (numberOfUnsoldBallots == 0)
+            {
+                throw new DrawException("There are no more ballots for sale for this draw");
+            }
         }
     }
 }
