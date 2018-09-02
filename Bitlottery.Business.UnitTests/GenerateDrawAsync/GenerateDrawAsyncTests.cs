@@ -19,7 +19,7 @@ namespace BitLottery.Business.UnitTests
         {
             // Arrange
             int expectedSeed = 1;
-            DateTime expectedDrawDate = new DateTime(2018, 1, 1);
+            DateTime expectedSellUntilDate = new DateTime(2018, 1, 1);
             int expectedNumberOfBallots = 1;
             var expectedRandomNumbers = new List<int> { expectedSeed };
             var expectedBallotNumber = 12345;
@@ -41,7 +41,7 @@ namespace BitLottery.Business.UnitTests
               .Returns(expectedBallotNumber);
 
             // Act
-            Draw result = await Lottery.GenerateDrawAsync(expectedDrawDate, expectedNumberOfBallots);
+            Draw result = await Lottery.GenerateDrawAsync(expectedSellUntilDate, expectedNumberOfBallots);
 
             // Assert
             result.Should().NotBeNull();
@@ -52,7 +52,7 @@ namespace BitLottery.Business.UnitTests
             firstBallot.Number.Should().Be(expectedBallotNumber);
             firstBallot.SellDate.Should().BeNull();
 
-            result.DrawDate.Should().Be(expectedDrawDate);
+            result.SellUntilDate.Should().Be(expectedSellUntilDate);
 
             actualGenerationSettings.Should().NotBeNull();
             actualGenerationSettings.NumberOfIntegers.Should().Be(1);

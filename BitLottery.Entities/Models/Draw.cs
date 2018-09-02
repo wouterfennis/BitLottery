@@ -14,9 +14,14 @@ namespace BitLottery.Models
         public int Id { get; set; }
 
         /// <summary>
+        /// After this date no more ballots can be sold
+        /// </summary>
+        public DateTime SellUntilDate { get; set; }
+
+        /// <summary>
         /// The date the draw takes place
         /// </summary>
-        public DateTime DrawDate { get; set; }
+        public DateTime? DrawDate { get; set; }
 
         /// <summary>
         /// The ballots associated with the draw

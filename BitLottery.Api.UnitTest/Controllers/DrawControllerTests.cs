@@ -16,16 +16,16 @@ namespace BitLottery.Api.UnitTests
     public class DrawControllerTests
     {
         private Mock<ILottery> lotteryMock;
-        private Mock<IRepository<Draw, int>> drawRepositoryMock;
-        private Mock<IRepository<Ballot, int>> ballotRepositoryMock;
+        private Mock<IDrawRepository> drawRepositoryMock;
+        private Mock<IBallotRepository> ballotRepositoryMock;
         private DrawController drawController;
 
         [TestInitialize]
         public void Initalize()
         {
             lotteryMock = new Mock<ILottery>(MockBehavior.Strict);
-            drawRepositoryMock = new Mock<IRepository<Draw, int>>(MockBehavior.Strict);
-            ballotRepositoryMock = new Mock<IRepository<Ballot, int>>(MockBehavior.Strict);
+            drawRepositoryMock = new Mock<IDrawRepository>(MockBehavior.Strict);
+            ballotRepositoryMock = new Mock<IBallotRepository>(MockBehavior.Strict);
 
             drawController = new DrawController(lotteryMock.Object, drawRepositoryMock.Object, ballotRepositoryMock.Object);
         }
@@ -34,18 +34,18 @@ namespace BitLottery.Api.UnitTests
         public async Task GenerateDraw_CallsBusinessLayer_CallsRepositoryLayerAsync()
         {
             // Arrange
-            DateTime expectedDrawDate = new DateTime(2018, 1, 1);
+            DateTime expectedSellUntilDate = new DateTime(2018, 1, 1);
             int expectedNumberOfBallots = 10;
             int expectedId = 222;
             var expectedDraw = new Draw
             {
                 Id = expectedId,
-                DrawDate = expectedDrawDate,
+                SellUntilDate = expectedSellUntilDate,
                 Ballots = new List<Ballot>()
             };
 
             lotteryMock
-              .Setup(mock => mock.GenerateDrawAsync(expectedDrawDate, expectedNumberOfBallots))
+              .Setup(mock => mock.GenerateDrawAsync(expectedSellUntilDate, expectedNumberOfBallots))
               .ReturnsAsync(expectedDraw);
 
             drawRepositoryMock.Setup(mock => mock.Insert(expectedDraw))
@@ -53,7 +53,7 @@ namespace BitLottery.Api.UnitTests
 
             var drawConfiguration = new DrawConfiguration
             {
-                DrawDate = expectedDrawDate,
+                SellUntilDate = expectedSellUntilDate,
                 NumberOfBallots = expectedNumberOfBallots
             };
 
@@ -75,7 +75,8 @@ namespace BitLottery.Api.UnitTests
             var expectedDraw = new Draw
             {
                 Id = expectedId,
-                DrawDate = new DateTime(2018, 1, 1)
+                Ballots = new Ballot[5],
+                SellUntilDate = new DateTime(2018, 1, 1)
             };
 
             drawRepositoryMock.Setup(mock => mock.Get(expectedId))
@@ -87,7 +88,7 @@ namespace BitLottery.Api.UnitTests
             // Assert
             result.Should().NotBeNull();
             result.Should().Be(expectedDraw);
-
+            
             drawRepositoryMock.VerifyAll();
         }
 
@@ -98,7 +99,7 @@ namespace BitLottery.Api.UnitTests
             int expectedNumberOfBallots = 10;
             int expectedBallotId = 111;
             int expectedDrawId = 222;
-            DateTime expectedDrawDate = new DateTime(2018, 1, 1);
+            DateTime expectedSellUntilDate = new DateTime(2018, 1, 1);
 
             var expectedBallot = new Ballot
             {
@@ -109,7 +110,7 @@ namespace BitLottery.Api.UnitTests
             var expectedDraw = new Draw
             {
                 Id = expectedDrawId,
-                DrawDate = expectedDrawDate,
+                SellUntilDate = expectedSellUntilDate,
                 Ballots = new List<Ballot>()
             };
 
@@ -125,7 +126,7 @@ namespace BitLottery.Api.UnitTests
 
             var drawConfiguration = new DrawConfiguration
             {
-                DrawDate = expectedDrawDate,
+                SellUntilDate = expectedSellUntilDate,
                 NumberOfBallots = expectedNumberOfBallots
             };
 

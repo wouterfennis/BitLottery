@@ -29,5 +29,11 @@ namespace BitLottery.Controllers
         /// <param name="drawId">The id of the draw</param>
         /// <returns>Id of the sold ballot</returns>
         Task<int> SellBallotAsync(int drawId);
+
+        /// <summary>
+        /// Draws the winning numbers for a draw
+        /// </summary>
+        /// <param name="drawId">The id of the draw</param>
+        void DrawWins(int drawId);
     }
 }

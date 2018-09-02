@@ -1,5 +1,4 @@
-﻿using BitLottery.Business;
-using BitLottery.Business.Exceptions;
+﻿using BitLottery.Business.Exceptions;
 using BitLottery.Business.RandomGenerator;
 using BitLottery.Models;
 using BitLottery.Utilities.SystemTime;
@@ -17,16 +16,13 @@ namespace BitLottery.Business.UnitTests
     {
         [TestMethod]
         [ExpectedException(typeof(DrawException))]
-        public async Task SellBallotAsync_AfterDrawDate_ThrowsException()
+        public async Task SellBallotAsync_WhenDrawHasBeenDrawn_ThrowsException()
         {
             // Arrange
-            DateTime expectedSellDate = new DateTime(2018, 01, 02);
-
-            SystemTime.SetDateTime(expectedSellDate);
-
             var expectedDraw = new Draw
             {
-                DrawDate = new DateTime(2018, 1, 1),
+                SellUntilDate = new DateTime(2017, 12, 31, 23, 59, 59),
+                DrawDate = new DateTime(2018, 01, 01),
                 Ballots = new List<Ballot>
                     {
                     new Ballot {
@@ -46,7 +42,43 @@ namespace BitLottery.Business.UnitTests
             catch (Exception exception)
             {
                 // Assert
-                exception.Message.Should().Be($"The SellDate: {expectedSellDate} cannot be after the DrawDate: {expectedDraw.DrawDate}");
+                exception.Message.Should().Be($"This draw has already been drawn at { expectedDraw.DrawDate }");
+                throw;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(DrawException))]
+        public async Task SellBallotAsync_AfterSellUntilDate_ThrowsException()
+        {
+            // Arrange
+            DateTime expectedSellDate = new DateTime(2018, 01, 02);
+
+            SystemTime.SetDateTime(expectedSellDate);
+
+            var expectedDraw = new Draw
+            {
+                SellUntilDate = new DateTime(2018, 1, 1),
+                Ballots = new List<Ballot>
+                    {
+                    new Ballot {
+                        Number = 12345,
+                    },
+                    new Ballot {
+                        Number = 54321,
+                    }
+                }
+            };
+
+            // Act
+            try
+            {
+                Ballot result = await Lottery.SellBallotAsync(expectedDraw);
+            }
+            catch (Exception exception)
+            {
+                // Assert
+                exception.Message.Should().Be($"The SellDate: {expectedSellDate} cannot be after the SellUntilDate: {expectedDraw.SellUntilDate}");
                 throw;
             }
         }
@@ -74,7 +106,7 @@ namespace BitLottery.Business.UnitTests
 
             var expectedDraw = new Draw
             {
-                DrawDate = new DateTime(2018, 1, 1),
+                SellUntilDate = new DateTime(2018, 1, 1),
                 Ballots = expectedBallots
             };
 
@@ -113,7 +145,7 @@ namespace BitLottery.Business.UnitTests
 
             var expectedDraw = new Draw
             {
-                DrawDate = new DateTime(2018, 1, 1),
+                SellUntilDate = new DateTime(2018, 1, 1),
                 Ballots = expectedBallots
             };
 

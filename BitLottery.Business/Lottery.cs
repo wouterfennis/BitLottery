@@ -39,12 +39,12 @@ namespace BitLottery.Business
         }
 
         /// </inheritdoc>
-        public async Task<Draw> GenerateDrawAsync(DateTime drawDate, int numberOfBallots)
+        public async Task<Draw> GenerateDrawAsync(DateTime sellUntilDate, int numberOfBallots)
         {
             IEnumerable<Ballot> ballots = await GenerateBallotsAsync(numberOfBallots);
             var draw = new Draw
             {
-                DrawDate = drawDate,
+                SellUntilDate = sellUntilDate,
                 Ballots = ballots
             };
 
@@ -95,7 +95,7 @@ namespace BitLottery.Business
 
         public async Task<Ballot> SellBallotAsync(Draw draw)
         {
-            
+
             var unsoldBallots = draw.GetUnsoldBallots();
             int numberOfUnsoldBallots = unsoldBallots.Count();
             ValidateDraw(draw, numberOfUnsoldBallots);
@@ -118,9 +118,15 @@ namespace BitLottery.Business
         private void ValidateDraw(Draw draw, int numberOfUnsoldBallots)
         {
             var sellDate = SystemTime.Now();
-            if (sellDate > draw.DrawDate)
+
+            if (draw.DrawDate.HasValue)
             {
-                throw new DrawException($"The SellDate: { sellDate } cannot be after the DrawDate: { draw.DrawDate}");
+                throw new DrawException($"This draw has already been drawn at { draw.DrawDate }");
+            }
+
+            if (sellDate > draw.SellUntilDate)
+            {
+                throw new DrawException($"The SellDate: { sellDate } cannot be after the SellUntilDate: { draw.SellUntilDate}");
             }
 
             if (numberOfUnsoldBallots == 0)

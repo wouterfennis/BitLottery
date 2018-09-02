@@ -13,10 +13,10 @@ namespace BitLottery.Api.Controllers
     public class DrawController : Controller, IDrawController
     {
         private readonly ILottery _lottery;
-        private readonly IRepository<Draw, int> _drawRepository;
-        private readonly IRepository<Ballot, int> _ballotRepository;
+        private readonly IDrawRepository _drawRepository;
+        private readonly IBallotRepository _ballotRepository;
 
-        public DrawController(ILottery lottery, IRepository<Draw, int> drawRepository, IRepository<Ballot, int> ballotRepository)
+        public DrawController(ILottery lottery, IDrawRepository drawRepository, IBallotRepository ballotRepository)
         {
             _lottery = lottery;
             _drawRepository = drawRepository;
@@ -26,7 +26,7 @@ namespace BitLottery.Api.Controllers
         [HttpPost]
         public async Task<int> GenerateDraw(DrawConfiguration drawConfiguration)
         {
-            Draw draw = await _lottery.GenerateDrawAsync(drawConfiguration.DrawDate, drawConfiguration.NumberOfBallots);
+            Draw draw = await _lottery.GenerateDrawAsync(drawConfiguration.SellUntilDate, drawConfiguration.NumberOfBallots);
             int drawId = _drawRepository.Insert(draw);
             return drawId;
         }
@@ -38,13 +38,19 @@ namespace BitLottery.Api.Controllers
             return draw;
         }
 
-        [HttpGet("buyBallot/{drawId}")]
+        [HttpPut("buyBallot/{drawId}")]
         public async Task<int> SellBallotAsync(int drawId)
         {
             Draw draw = _drawRepository.Get(drawId);
             Ballot soldBallot = await _lottery.SellBallotAsync(draw);
             _ballotRepository.Update(soldBallot, soldBallot.Id);
             return soldBallot.Id;
+        }
+
+        [HttpPut("drawWins/{drawId}")]
+        public void DrawWins(int drawId)
+        {
+            Draw draw = _drawRepository.Get(drawId);
         }
     }
 }
