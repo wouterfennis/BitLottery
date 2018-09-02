@@ -34,6 +34,6 @@ namespace BitLottery.Controllers
         /// Draws the winning numbers for a draw
         /// </summary>
         /// <param name="drawId">The id of the draw</param>
-        void DrawWins(int drawId);
+        Task DrawWinsAsync(int drawId);
     }
 }

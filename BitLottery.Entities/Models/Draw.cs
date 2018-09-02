@@ -1,3 +1,4 @@
+using BitLottery.Utilities.SystemTime;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -34,7 +35,24 @@ namespace BitLottery.Models
         /// <returns>All unsold ballots</returns>
         public IEnumerable<Ballot> GetUnsoldBallots()
         {
-            return Ballots.Where(ballot => !ballot.SellDate.HasValue);
+            return Ballots.Where(ballot => !ballot.SellDate.HasValue).ToList();
+        }
+
+        /// <summary>
+        /// Searches for the sold ballots
+        /// </summary>
+        /// <returns>All sold ballots</returns>
+        public IEnumerable<Ballot> GetSoldBallots()
+        {
+            return Ballots.Where(ballot => ballot.SellDate.HasValue).ToList();
+        }
+
+        /// <summary>
+        /// Registers this draw as drawn
+        /// </summary>
+        public void RegisterAsDrawn()
+        {
+            DrawDate = SystemTime.Now();
         }
     }
 }

@@ -15,5 +15,10 @@ namespace BitLottery.Business
         /// Picks a random ballot from a Draw and registers it as sold
         /// </summary>
         Task<Ballot> SellBallotAsync(Draw draw);
+
+        /// <summary>
+        /// Pics a random ballot from a Draw and registers it as winning
+        /// </summary>
+        Task<Ballot> DrawWinsAsync(Draw draw);
     }
 }

@@ -22,9 +22,25 @@ namespace BitLottery.Models
         /// </summary>
         public int Number { get; set; }
 
-        public void Sell()
+        /// <summary>
+        /// Is this ballot the winner of the draw
+        /// </summary>
+        public bool IsWinner { get; set; }
+
+        /// <summary>
+        /// Registers this ballot as sold
+        /// </summary>
+        public void RegisterAsSold()
         {
             SellDate = SystemTime.Now();
+        }
+
+        /// <summary>
+        /// Registers this ballot as the winner
+        /// </summary>
+        public void RegisterAsWinner()
+        {
+            IsWinner = true;
         }
     }
 }

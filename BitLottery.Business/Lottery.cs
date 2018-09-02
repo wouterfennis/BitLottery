@@ -95,28 +95,37 @@ namespace BitLottery.Business
 
         public async Task<Ballot> SellBallotAsync(Draw draw)
         {
-
+            DetermineBallotSaleIsPossible(draw);
             var unsoldBallots = draw.GetUnsoldBallots();
+
             int numberOfUnsoldBallots = unsoldBallots.Count();
-            ValidateDraw(draw, numberOfUnsoldBallots);
-
-            var generationSettings = new GenerationSettings
+            int indexToBePicked = 0;
+            if (numberOfUnsoldBallots != 1)
             {
-                NumberOfIntegers = 1,
-                MinimalIntValue = 0,
-                MaximumIntValue = numberOfUnsoldBallots - 1
-            };
+                indexToBePicked = await GenerateRandomNumberAsync(0, unsoldBallots.Count() - 1);
+            }
 
-            IEnumerable<int> randomNumbers = await _randomGenerator.GenerateRandomNumbersAsync(generationSettings);
-            int randomIndex = randomNumbers.Single();
-
-            var pickedBallot = draw.Ballots.ElementAt(randomIndex);
-            pickedBallot.Sell();
+            var pickedBallot = unsoldBallots.ElementAt(indexToBePicked);
+            pickedBallot.RegisterAsSold();
             return pickedBallot;
         }
 
-        private void ValidateDraw(Draw draw, int numberOfUnsoldBallots)
+        private async Task<int> GenerateRandomNumberAsync(int minimalIntValue, int maximumIntValue)
         {
+            var generationSettings = new GenerationSettings
+            {
+                NumberOfIntegers = 1,
+                MinimalIntValue = minimalIntValue,
+                MaximumIntValue = maximumIntValue
+            };
+
+            IEnumerable<int> randomNumbers = await _randomGenerator.GenerateRandomNumbersAsync(generationSettings);
+            return randomNumbers.Single();
+        }
+
+        private void DetermineBallotSaleIsPossible(Draw draw)
+        {
+            int numberOfUnsoldBallots = draw.GetUnsoldBallots().Count();
             var sellDate = SystemTime.Now();
 
             if (draw.DrawDate.HasValue)
@@ -132,6 +141,40 @@ namespace BitLottery.Business
             if (numberOfUnsoldBallots == 0)
             {
                 throw new DrawException("There are no more ballots for sale for this draw");
+            }
+        }
+
+        public async Task<Ballot> DrawWinsAsync(Draw draw)
+        {
+            DetermineDrawCanBeDrawn(draw);
+            IEnumerable<Ballot> soldBallots = draw.GetSoldBallots();
+
+            int randomIndex = await GenerateRandomNumberAsync(0, soldBallots.Count() - 1);
+
+            var pickedBallot = soldBallots.ElementAt(randomIndex);
+            pickedBallot.RegisterAsWinner();
+            draw.RegisterAsDrawn();
+            return pickedBallot;
+        }
+
+        private void DetermineDrawCanBeDrawn(Draw draw)
+        {
+            int numberOfSoldBallots = draw.GetSoldBallots().Count();
+            var drawDate = SystemTime.Now();
+
+            if (draw.DrawDate.HasValue)
+            {
+                throw new DrawException($"This draw has already been drawn at { draw.DrawDate }");
+            }
+
+            if (drawDate < draw.SellUntilDate)
+            {
+                throw new DrawException($"The DrawDate: { drawDate } cannot be before the SellUntilDate: { draw.SellUntilDate}");
+            }
+
+            if (numberOfSoldBallots <= 1)
+            {
+                throw new DrawException("There are not enough ballots sold for this draw");
             }
         }
     }

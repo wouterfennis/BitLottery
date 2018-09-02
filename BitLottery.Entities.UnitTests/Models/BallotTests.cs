@@ -16,7 +16,7 @@ namespace BitLottery.Entities.UnitTests.Models
         }
 
         [TestMethod]
-        public void Sell_AddsSellDateToBallot()
+        public void RegisterAsSold_AddsSellDateToBallot()
         {
             // Arrange
             var expectedDateTime = new DateTime(2018, 01, 01);
@@ -29,12 +29,33 @@ namespace BitLottery.Entities.UnitTests.Models
             };
 
             // Act
-            ballot.Sell();
+            ballot.RegisterAsSold();
 
             // Assert
             ballot.Id.Should().Be(ballot.Id);
             ballot.Number.Should().Be(ballot.Number);
             ballot.SellDate.Should().Be(expectedDateTime);
+        }
+
+        [TestMethod]
+        public void RegisterAsWinner_ChangeStatusToWinner()
+        {
+            // Arrange
+            var ballot = new Ballot
+            {
+                Id = 1,
+                Number = 1234,
+                SellDate = new DateTime(2018, 1, 1)
+            };
+
+            // Act
+            ballot.RegisterAsWinner();
+
+            // Assert
+            ballot.Id.Should().Be(ballot.Id);
+            ballot.Number.Should().Be(ballot.Number);
+            ballot.SellDate.Should().Be(ballot.SellDate);
+            ballot.IsWinner.Should().BeTrue();
         }
     }
 }

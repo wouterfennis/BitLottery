@@ -48,9 +48,13 @@ namespace BitLottery.Api.Controllers
         }
 
         [HttpPut("drawWins/{drawId}")]
-        public void DrawWins(int drawId)
+        public async Task DrawWinsAsync(int drawId)
         {
             Draw draw = _drawRepository.Get(drawId);
+            Ballot winningBallot = await _lottery.DrawWinsAsync(draw);
+            winningBallot.RegisterAsWinner();
+            _ballotRepository.Update(winningBallot, winningBallot.Id);
+            _drawRepository.Update(draw, draw.Id);
         }
     }
 }

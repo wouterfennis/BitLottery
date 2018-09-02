@@ -49,5 +49,46 @@ namespace BitLottery.Entities.UnitTests.Models
             firstBallot.Should().Be(ballots.ElementAt(0));
             secondBallot.Should().Be(ballots.ElementAt(1));
         }
+
+        [TestMethod]
+        public void GetSoldBallots_ReturnsCorrectBallots()
+        {
+            // Arrange
+            var ballots = new List<Ballot>
+            {
+                new Ballot
+                {
+                    Number = 4321
+                },
+                new Ballot
+                {
+                    Number = 9876,
+                    SellDate = new DateTime(2017, 12, 23)
+                },
+                new Ballot
+                {
+                    Id = 1,
+                    Number = 1234,
+                    SellDate = new DateTime(2017, 12, 22)
+                }
+            };
+
+            var draw = new Draw
+            {
+                Ballots = ballots
+            };
+
+            // Act
+            IEnumerable<Ballot> result = draw.GetSoldBallots();
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Count().Should().Be(2);
+            var firstBallot = result.ElementAt(0);
+            var secondBallot = result.ElementAt(1);
+
+            firstBallot.Should().Be(ballots.ElementAt(1));
+            secondBallot.Should().Be(ballots.ElementAt(2));
+        }
     }
 }
