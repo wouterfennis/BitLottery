@@ -1,6 +1,6 @@
 ﻿using BitLottery.Models;
 
-namespace BitLottery.Database
+namespace BitLottery.Database.Interfaces
 {
     public interface IBallotRepository : IRepository<Ballot, int>
     {

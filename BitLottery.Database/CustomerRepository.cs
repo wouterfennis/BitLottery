@@ -1,14 +1,15 @@
 ﻿using BitLottery.Database.Interfaces;
 using BitLottery.Models;
+using System;
 using System.Linq;
 
 namespace BitLottery.Database
 {
-    public class BallotRepository : IBallotRepository 
+    public class CustomerRepository : ICustomerRepository 
     {
         private readonly BitLotteryContext _context;
 
-        public BallotRepository(BitLotteryContext context)
+        public CustomerRepository(BitLotteryContext context)
         {
             _context = context;
         }
@@ -17,36 +18,36 @@ namespace BitLottery.Database
         {
             bool deleteSuccessfull = false;
 
-            Ballot foundBallot = Get(key);
-            if (foundBallot != null)
+            Customer foundCustomer = Get(key);
+            if (foundCustomer != null)
             {
-                _context.Ballots.Remove(foundBallot);
+                _context.Customers.Remove(foundCustomer);
                 _context.SaveChanges();
                 deleteSuccessfull = true;
             }
             return deleteSuccessfull;
         }
 
-        public Ballot Get(int key)
+        public Customer Get(int key)
         {
-            return _context.Ballots
-                .SingleOrDefault(ballot => ballot.Id == key);
+            return _context.Customers
+                .SingleOrDefault(customer => customer.Id == key);
         }
 
-        public int Insert(Ballot entity)
+        public int Insert(Customer entity)
         {
-            _context.Ballots.Add(entity);
+            _context.Customers.Add(entity);
             _context.SaveChanges();
-            return entity.Id;
+            return entity.Number;
         }
 
-        public bool Update(Ballot entity, int key)
+        public bool Update(Customer entity, int key)
         {
             bool isUpdateSuccessfull = false;
-            Ballot foundBallot = Get(key);
-            if (foundBallot != null)
+            Customer foundCustomer = Get(key);
+            if (foundCustomer != null)
             {
-                foundBallot = entity;
+                foundCustomer = entity;
                 _context.SaveChanges();
                 isUpdateSuccessfull = true;
             }

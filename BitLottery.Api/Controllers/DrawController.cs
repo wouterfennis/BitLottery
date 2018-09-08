@@ -1,10 +1,9 @@
 using BitLottery.Api.Models;
 using BitLottery.Business;
-using BitLottery.Controllers;
-using BitLottery.Database;
+using BitLottery.Controllers.Interfaces;
+using BitLottery.Database.Interfaces;
 using BitLottery.Models;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Threading.Tasks;
 
 namespace BitLottery.Api.Controllers
@@ -16,7 +15,10 @@ namespace BitLottery.Api.Controllers
         private readonly IDrawRepository _drawRepository;
         private readonly IBallotRepository _ballotRepository;
 
-        public DrawController(ILottery lottery, IDrawRepository drawRepository, IBallotRepository ballotRepository)
+        public DrawController(
+            ILottery lottery, 
+            IDrawRepository drawRepository, 
+            IBallotRepository ballotRepository)
         {
             _lottery = lottery;
             _drawRepository = drawRepository;
@@ -27,34 +29,25 @@ namespace BitLottery.Api.Controllers
         public async Task<int> GenerateDraw(DrawConfiguration drawConfiguration)
         {
             Draw draw = await _lottery.GenerateDrawAsync(drawConfiguration.SellUntilDate, drawConfiguration.NumberOfBallots);
-            int drawId = _drawRepository.Insert(draw);
-            return drawId;
+            int drawNumber = _drawRepository.Insert(draw);
+            return drawNumber;
         }
 
-        [HttpGet("{drawId}")]
-        public Draw GetDraw(int drawId)
+        [HttpGet("{drawNumber}")]
+        public Draw GetDraw(int drawNumber)
         {
-            Draw draw = _drawRepository.Get(drawId);
+            Draw draw = _drawRepository.Get(drawNumber);
             return draw;
         }
 
-        [HttpPut("buyBallot/{drawId}")]
-        public async Task<int> SellBallotAsync(int drawId)
+        [HttpPut("drawWins/{drawNumber}")]
+        public async Task DrawWinsAsync(int drawNumber)
         {
-            Draw draw = _drawRepository.Get(drawId);
-            Ballot soldBallot = await _lottery.SellBallotAsync(draw);
-            _ballotRepository.Update(soldBallot, soldBallot.Id);
-            return soldBallot.Id;
-        }
-
-        [HttpPut("drawWins/{drawId}")]
-        public async Task DrawWinsAsync(int drawId)
-        {
-            Draw draw = _drawRepository.Get(drawId);
+            Draw draw = _drawRepository.Get(drawNumber);
             Ballot winningBallot = await _lottery.DrawWinsAsync(draw);
             winningBallot.RegisterAsWinner();
             _ballotRepository.Update(winningBallot, winningBallot.Id);
-            _drawRepository.Update(draw, draw.Id);
+            _drawRepository.Update(draw, draw.Number);
         }
     }
 }

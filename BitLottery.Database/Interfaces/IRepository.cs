@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BitLottery.Database
+﻿namespace BitLottery.Database.Interfaces
 {
     /// <summary>
     /// Generic Repository for storing, retrieving, updating and deleting entities

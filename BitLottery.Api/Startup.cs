@@ -2,6 +2,7 @@
 using BitLottery.Business.RandomGenerator;
 using BitLottery.Business.RandomWrapper;
 using BitLottery.Database;
+using BitLottery.Database.Interfaces;
 using BitLottery.Models;
 using BitLottery.RandomService;
 using BitLottery.RandomService.HttpClientWrapper;
@@ -35,6 +36,7 @@ namespace BitLottery.Api
             // Repositories
             services.AddTransient<IDrawRepository, DrawRepository>();
             services.AddTransient<IBallotRepository, BallotRepository>();
+            services.AddTransient<ICustomerRepository, CustomerRepository>();
 
             // Services
             services.AddTransient<IRandomService, RandomDotOrgService>();

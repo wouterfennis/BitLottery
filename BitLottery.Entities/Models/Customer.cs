@@ -1,16 +1,25 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace BitLottery.Models
 {
     /// <summary>
-    /// Entity containg customer information
+    /// Entity containing customer information
     /// </summary>
     public class Customer
     {
+        /// <summary>
+        /// Database Id
+        /// </summary>
         [Key]
         public int Id { get; set; }
 
+        /// <summary>
+        /// The number of the customer
+        /// </summary>
+        public int Number { get; set; }
+        
         /// <summary>
         /// The name of the customer
         /// </summary>
@@ -19,6 +28,15 @@ namespace BitLottery.Models
         /// <summary>
         /// The ballots the customer has bought
         /// </summary>
-        public IEnumerable<Ballot> Ballots { get; set; }
+        public List<Ballot> Ballots { get; set; }
+
+        /// <summary>
+        /// Adds a new ballot to the ballots collection
+        /// </summary>
+        /// <param name="soldBallot">the sold ballot</param>
+        public void AddBallot(Ballot soldBallot)
+        {
+            Ballots.Add(soldBallot);
+        }
     }
 }

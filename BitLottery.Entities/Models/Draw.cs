@@ -11,8 +11,16 @@ namespace BitLottery.Models
     /// </summary>
     public class Draw
     {
+        /// <summary>
+        /// Database Id
+        /// </summary>
         [Key]
         public int Id { get; set; }
+
+        /// <summary>
+        /// The number of the draw
+        /// </summary>
+        public int Number { get; set; }
 
         /// <summary>
         /// After this date no more ballots can be sold

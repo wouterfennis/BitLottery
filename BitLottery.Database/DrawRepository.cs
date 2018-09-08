@@ -1,4 +1,5 @@
-﻿using BitLottery.Models;
+﻿using BitLottery.Database.Interfaces;
+using BitLottery.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
@@ -31,14 +32,14 @@ namespace BitLottery.Database
         {
             return _context.Draws
                 .Include(draw => draw.Ballots)
-                .SingleOrDefault(draw => draw.Id == key);
+                .SingleOrDefault(draw => draw.Number == key);
         }
 
         public int Insert(Draw entity)
         {
             _context.Draws.Add(entity);
             _context.SaveChanges();
-            return entity.Id;
+            return entity.Number;
         }
 
         public bool Update(Draw entity, int key)
