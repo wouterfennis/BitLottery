@@ -3,11 +3,11 @@ using BitLottery.Business.RandomGenerator;
 using BitLottery.Business.RandomWrapper;
 using BitLottery.Database;
 using BitLottery.Database.Interfaces;
-using BitLottery.Models;
 using BitLottery.RandomService;
 using BitLottery.RandomService.HttpClientWrapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
@@ -42,7 +42,8 @@ namespace BitLottery.Api
             services.AddTransient<IRandomService, RandomDotOrgService>();
             services.AddTransient<IHttpClientWrapper, HttpClientWrapper>();
 
-            services.AddDbContext<BitLotteryContext>();
+            string connectionString = @"Server=localhost;Database=BitLottery;Trusted_Connection=True;";
+            services.AddDbContext<BitLotteryContext>(options => options.UseSqlServer(connectionString));
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>

@@ -1,4 +1,5 @@
-﻿using BitLottery.Database.Interfaces;
+﻿using BitLottery.Database.Exceptions;
+using BitLottery.Database.Interfaces;
 using BitLottery.Models;
 using System;
 using System.Linq;
@@ -30,8 +31,14 @@ namespace BitLottery.Database
 
         public Customer Get(int key)
         {
-            return _context.Customers
+            Customer foundCustomer = _context.Customers
                 .SingleOrDefault(customer => customer.Id == key);
+
+            if(foundCustomer == null)
+            {
+                throw new EntityNotFoundException($"Customernumber: {key} not found");
+            }
+            return foundCustomer;
         }
 
         public int Insert(Customer entity)

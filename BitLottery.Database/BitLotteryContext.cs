@@ -11,16 +11,13 @@ namespace BitLottery.Database
             Database.EnsureCreated();
         }
 
+        public BitLotteryContext(DbContextOptions<BitLotteryContext> options)
+        : base(options)
+        { }
+
         public DbSet<Draw> Draws { get; set; }
         public DbSet<Ballot> Ballots { get; set; }
         public DbSet<Customer> Customers { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            string connectionString = @"Server=localhost;Database=BitLottery;Trusted_Connection=True;";
-            optionsBuilder.UseSqlServer(connectionString);
-            base.OnConfiguring(optionsBuilder);
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

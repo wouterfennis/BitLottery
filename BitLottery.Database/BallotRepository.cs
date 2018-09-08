@@ -1,10 +1,11 @@
-﻿using BitLottery.Database.Interfaces;
+﻿using BitLottery.Database.Exceptions;
+using BitLottery.Database.Interfaces;
 using BitLottery.Models;
 using System.Linq;
 
 namespace BitLottery.Database
 {
-    public class BallotRepository : IBallotRepository 
+    public class BallotRepository : IBallotRepository
     {
         private readonly BitLotteryContext _context;
 
@@ -29,8 +30,13 @@ namespace BitLottery.Database
 
         public Ballot Get(int key)
         {
-            return _context.Ballots
+            var foundBallot = _context.Ballots
                 .SingleOrDefault(ballot => ballot.Id == key);
+            if (foundBallot == null)
+            {
+                throw new EntityNotFoundException($"BallotId: {key} not found");
+            }
+            return foundBallot;
         }
 
         public int Insert(Ballot entity)

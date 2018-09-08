@@ -1,4 +1,5 @@
-﻿using BitLottery.Database.Interfaces;
+﻿using BitLottery.Database.Exceptions;
+using BitLottery.Database.Interfaces;
 using BitLottery.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -30,9 +31,15 @@ namespace BitLottery.Database
 
         public Draw Get(int key)
         {
-            return _context.Draws
+            Draw foundDraw = _context.Draws
                 .Include(draw => draw.Ballots)
                 .SingleOrDefault(draw => draw.Number == key);
+
+            if (foundDraw == null)
+            {
+                throw new EntityNotFoundException($"Drawnumber: {key} not found");
+            }
+            return foundDraw;
         }
 
         public int Insert(Draw entity)
