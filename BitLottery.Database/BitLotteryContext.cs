@@ -5,15 +5,11 @@ namespace BitLottery.Database
 {
     public class BitLotteryContext : DbContext
     {
-        public BitLotteryContext()
-        {
-            //Database.EnsureDeleted();
-            Database.EnsureCreated();
-        }
-
         public BitLotteryContext(DbContextOptions<BitLotteryContext> options)
         : base(options)
-        { }
+        {
+            Database.EnsureCreated();
+        }
 
         public DbSet<Draw> Draws { get; set; }
         public DbSet<Ballot> Ballots { get; set; }
