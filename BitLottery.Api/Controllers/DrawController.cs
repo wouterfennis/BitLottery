@@ -2,7 +2,7 @@ using BitLottery.Api.Models;
 using BitLottery.Business;
 using BitLottery.Controllers.Interfaces;
 using BitLottery.Database.Interfaces;
-using BitLottery.Models;
+using BitLottery.Entities.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -16,8 +16,8 @@ namespace BitLottery.Api.Controllers
         private readonly IBallotRepository _ballotRepository;
 
         public DrawController(
-            ILottery lottery, 
-            IDrawRepository drawRepository, 
+            ILottery lottery,
+            IDrawRepository drawRepository,
             IBallotRepository ballotRepository)
         {
             _lottery = lottery;

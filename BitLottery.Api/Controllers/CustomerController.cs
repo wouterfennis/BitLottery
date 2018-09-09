@@ -1,7 +1,7 @@
 using BitLottery.Api.Controllers.Interfaces;
 using BitLottery.Api.Models;
 using BitLottery.Database.Interfaces;
-using BitLottery.Models;
+using BitLottery.Entities.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BitLottery.Api.Controllers

@@ -1,5 +1,5 @@
 using BitLottery.Api.Models;
-using BitLottery.Models;
+using BitLottery.Entities.Models;
 using System.Threading.Tasks;
 
 namespace BitLottery.Controllers.Interfaces

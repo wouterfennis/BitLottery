@@ -1,12 +1,11 @@
 ﻿using BitLottery.Database.Exceptions;
 using BitLottery.Database.Interfaces;
-using BitLottery.Models;
-using System;
+using BitLottery.Entities.Models;
 using System.Linq;
 
 namespace BitLottery.Database
 {
-    public class CustomerRepository : ICustomerRepository 
+    public class CustomerRepository : ICustomerRepository
     {
         private readonly BitLotteryContext _context;
 
@@ -34,7 +33,7 @@ namespace BitLottery.Database
             Customer foundCustomer = _context.Customers
                 .SingleOrDefault(customer => customer.Number == key);
 
-            if(foundCustomer == null)
+            if (foundCustomer == null)
             {
                 throw new EntityNotFoundException($"Customernumber: {key} not found");
             }

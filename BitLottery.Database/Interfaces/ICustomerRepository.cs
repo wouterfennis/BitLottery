@@ -1,4 +1,4 @@
-﻿using BitLottery.Models;
+﻿using BitLottery.Entities.Models;
 
 namespace BitLottery.Database.Interfaces
 {

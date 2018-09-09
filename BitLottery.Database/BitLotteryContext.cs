@@ -1,4 +1,4 @@
-﻿using BitLottery.Models;
+﻿using BitLottery.Entities.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace BitLottery.Database
@@ -14,6 +14,7 @@ namespace BitLottery.Database
         public DbSet<Draw> Draws { get; set; }
         public DbSet<Ballot> Ballots { get; set; }
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<Price> Prices { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

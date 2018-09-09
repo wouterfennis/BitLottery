@@ -1,6 +1,6 @@
 ﻿using BitLottery.Database.Exceptions;
 using BitLottery.Database.Interfaces;
-using BitLottery.Models;
+using BitLottery.Entities.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 

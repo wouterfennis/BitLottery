@@ -1,10 +1,11 @@
+using BitLottery.Entities.Models;
 using BitLottery.Utilities.SystemTime;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
-namespace BitLottery.Models
+namespace BitLottery.Entities.Models
 {
     /// <summary>
     /// Entity containing draw information
@@ -36,6 +37,17 @@ namespace BitLottery.Models
         /// The ballots associated with the draw
         /// </summary>
         public IEnumerable<Ballot> Ballots { get; set; }
+
+        /// <summary>
+        /// The prices associated with the draw
+        /// </summary>
+        public List<Price> Prices { get; set; }
+
+        public Draw()
+        {
+            Ballots = new List<Ballot>();
+            Prices = new List<Price>();
+        }
 
         /// <summary>
         /// Searches for unsold ballots
@@ -78,7 +90,5 @@ namespace BitLottery.Models
         {
             DrawDate = SystemTime.Now();
         }
-
-
     }
 }

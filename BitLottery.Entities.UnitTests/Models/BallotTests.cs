@@ -1,4 +1,4 @@
-﻿using BitLottery.Models;
+﻿using BitLottery.Entities.Models;
 using BitLottery.Utilities.SystemTime;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

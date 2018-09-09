@@ -2,7 +2,7 @@ using BitLottery.Api.Controllers.Interfaces;
 using BitLottery.Api.Models;
 using BitLottery.Business;
 using BitLottery.Database.Interfaces;
-using BitLottery.Models;
+using BitLottery.Entities.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 

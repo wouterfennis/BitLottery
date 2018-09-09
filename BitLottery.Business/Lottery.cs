@@ -1,7 +1,7 @@
 using BitLottery.Business.Exceptions;
 using BitLottery.Business.RandomGenerator;
 using BitLottery.Business.RandomWrapper;
-using BitLottery.Models;
+using BitLottery.Entities.Models;
 using BitLottery.Utilities.SystemTime;
 using Microsoft.Extensions.Configuration;
 using System;

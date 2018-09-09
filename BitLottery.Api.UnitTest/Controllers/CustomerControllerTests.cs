@@ -1,7 +1,7 @@
 ﻿using BitLottery.Api.Controllers;
 using BitLottery.Api.Models;
 using BitLottery.Database.Interfaces;
-using BitLottery.Models;
+using BitLottery.Entities.Models;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;

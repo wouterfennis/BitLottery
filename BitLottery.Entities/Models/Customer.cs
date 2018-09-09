@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace BitLottery.Models
+namespace BitLottery.Entities.Models
 {
     /// <summary>
     /// Entity containing customer information

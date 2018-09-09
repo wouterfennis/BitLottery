@@ -1,10 +1,10 @@
-using BitLottery.Models;
+using BitLottery.Entities.Models;
 using System;
 using System.Threading.Tasks;
 
 namespace BitLottery.Business
 {
-  public interface ILottery
+    public interface ILottery
     {
         /// <summary>
         /// Generate and persist a new draw
