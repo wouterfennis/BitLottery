@@ -38,7 +38,7 @@ namespace BitLottery.Models
         public IEnumerable<Ballot> Ballots { get; set; }
 
         /// <summary>
-        /// Searches for the unsold ballots
+        /// Searches for unsold ballots
         /// </summary>
         /// <returns>All unsold ballots</returns>
         public IEnumerable<Ballot> GetUnsoldBallots()
@@ -47,7 +47,23 @@ namespace BitLottery.Models
         }
 
         /// <summary>
-        /// Searches for the sold ballots
+        /// Searches for unsold ballots with a specific last number
+        /// </summary>
+        /// <param name="lastNumber">The lastnumber</param>
+        /// <returns>All unsold ballots with the same lastnumber</returns>
+        public IEnumerable<Ballot> GetUnsoldBallots(int lastNumber)
+        {
+            var unsoldBallots = GetUnsoldBallots();
+            return unsoldBallots.Where(ballot => GetLastDigit(ballot.Number) == lastNumber).ToList();
+        }
+
+        private int GetLastDigit(int number)
+        {
+            return number % 10;
+        }
+
+        /// <summary>
+        /// Searches for sold ballots
         /// </summary>
         /// <returns>All sold ballots</returns>
         public IEnumerable<Ballot> GetSoldBallots()
@@ -62,5 +78,7 @@ namespace BitLottery.Models
         {
             DrawDate = SystemTime.Now();
         }
+
+
     }
 }

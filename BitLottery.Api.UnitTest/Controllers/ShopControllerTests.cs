@@ -69,6 +69,13 @@ namespace BitLottery.Api.UnitTests.Controllers
                 Ballots = new List<Ballot>()
             };
 
+            var expectedSaleInfo = new SaleInfo()
+            {
+                CustomerNumber = expectedCustomerNumber,
+                DrawNumber = expectedDrawNumber,
+                LastNumber = null
+            };
+
             drawRepositoryMock
                 .Setup(mock => mock.Get(expectedDrawNumber))
                 .Returns(expectedDraw);
@@ -86,7 +93,7 @@ namespace BitLottery.Api.UnitTests.Controllers
                 .Returns(true);
 
             lotteryMock
-                .Setup(mock => mock.SellBallotAsync(expectedDraw))
+                .Setup(mock => mock.SellBallotAsync(expectedDraw, expectedSaleInfo.LastNumber))
                 .ReturnsAsync(expectedBallot);
 
             var drawConfiguration = new DrawConfiguration
@@ -96,10 +103,10 @@ namespace BitLottery.Api.UnitTests.Controllers
             };
 
             // Act
-            int result = await shopController.SellBallotAsync(expectedCustomerNumber, expectedDrawNumber);
+            int result = await shopController.SellBallotAsync(expectedSaleInfo);
 
             // Assert
-            result.Should().Be(expectedBallot.Number);
+            result.Should().Be(expectedBallot.Id);
 
             expectedCustomer.Ballots.Count.Should().Be(1);
             var firstBallot = expectedCustomer.Ballots.Single();

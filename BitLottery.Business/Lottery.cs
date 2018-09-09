@@ -93,10 +93,10 @@ namespace BitLottery.Business
             return randomNumbers.Single();
         }
 
-        public async Task<Ballot> SellBallotAsync(Draw draw)
+        public async Task<Ballot> SellBallotAsync(Draw draw, int? lastNumber)
         {
-            DetermineBallotSaleIsPossible(draw);
-            var unsoldBallots = draw.GetUnsoldBallots();
+            IEnumerable<Ballot> unsoldBallots = DetermineBallotsToSell(draw, lastNumber);
+            DetermineBallotSaleIsPossible(draw, unsoldBallots.Count());
 
             int numberOfUnsoldBallots = unsoldBallots.Count();
             int indexToBePicked = 0;
@@ -108,6 +108,15 @@ namespace BitLottery.Business
             var pickedBallot = unsoldBallots.ElementAt(indexToBePicked);
             pickedBallot.RegisterAsSold();
             return pickedBallot;
+        }
+
+        private IEnumerable<Ballot> DetermineBallotsToSell(Draw draw, int? lastNumber)
+        {
+            if (lastNumber.HasValue)
+            {
+                return draw.GetUnsoldBallots(lastNumber.Value);
+            }
+            return draw.GetUnsoldBallots();
         }
 
         private async Task<int> GenerateRandomNumberAsync(int minimalIntValue, int maximumIntValue)
@@ -123,9 +132,8 @@ namespace BitLottery.Business
             return randomNumbers.Single();
         }
 
-        private void DetermineBallotSaleIsPossible(Draw draw)
+        private void DetermineBallotSaleIsPossible(Draw draw, int numberOfUnsoldBallots)
         {
-            int numberOfUnsoldBallots = draw.GetUnsoldBallots().Count();
             var sellDate = SystemTime.Now();
 
             if (draw.DrawDate.HasValue)

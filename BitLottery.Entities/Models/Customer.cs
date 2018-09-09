@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace BitLottery.Models
@@ -19,7 +18,7 @@ namespace BitLottery.Models
         /// The number of the customer
         /// </summary>
         public int Number { get; set; }
-        
+
         /// <summary>
         /// The name of the customer
         /// </summary>
@@ -29,6 +28,11 @@ namespace BitLottery.Models
         /// The ballots the customer has bought
         /// </summary>
         public List<Ballot> Ballots { get; set; }
+
+        public Customer()
+        {
+            Ballots = new List<Ballot>();
+        }
 
         /// <summary>
         /// Adds a new ballot to the ballots collection

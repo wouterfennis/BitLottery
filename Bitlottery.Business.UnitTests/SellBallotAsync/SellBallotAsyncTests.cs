@@ -34,10 +34,12 @@ namespace BitLottery.Business.UnitTests
                 }
             };
 
+            int? lastNumber = null;
+
             // Act
             try
             {
-                Ballot result = await Lottery.SellBallotAsync(expectedDraw);
+                Ballot result = await Lottery.SellBallotAsync(expectedDraw, lastNumber);
             }
             catch (Exception exception)
             {
@@ -70,10 +72,12 @@ namespace BitLottery.Business.UnitTests
                 }
             };
 
+            int? lastNumber = null;
+
             // Act
             try
             {
-                Ballot result = await Lottery.SellBallotAsync(expectedDraw);
+                Ballot result = await Lottery.SellBallotAsync(expectedDraw, lastNumber);
             }
             catch (Exception exception)
             {
@@ -110,10 +114,52 @@ namespace BitLottery.Business.UnitTests
                 Ballots = expectedBallots
             };
 
+            int? lastNumber = null;
+
             // Act
             try
             {
-                Ballot result = await Lottery.SellBallotAsync(expectedDraw);
+                Ballot result = await Lottery.SellBallotAsync(expectedDraw, lastNumber);
+            }
+            catch (Exception exception)
+            {
+                exception.Message.Should().Be("There are no more ballots for sale for this draw");
+                throw;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(DrawException))]
+        public async Task SellBallotAsync_WhenAllBallotsAreSoldForSpecificLastNumber_ThrowsException()
+        {
+            // Arrange
+            DateTime expectedSellDate = new DateTime(2017, 12, 27);
+
+            SystemTime.SetDateTime(expectedSellDate);
+
+            var expectedBallots = new List<Ballot>
+            {
+                new Ballot {
+                    Number = 12345,
+                },
+                new Ballot {
+                    Number = 54321,
+                    SellDate = new DateTime(2017, 12,25)
+                }
+            };
+
+            var expectedDraw = new Draw
+            {
+                SellUntilDate = new DateTime(2018, 1, 1),
+                Ballots = expectedBallots
+            };
+
+            int? lastNumber = 1;
+
+            // Act
+            try
+            {
+                Ballot result = await Lottery.SellBallotAsync(expectedDraw, lastNumber);
             }
             catch (Exception exception)
             {
@@ -143,6 +189,8 @@ namespace BitLottery.Business.UnitTests
                 }
             };
 
+            int? lastNumber = null;
+
             var expectedDraw = new Draw
             {
                 SellUntilDate = new DateTime(2018, 1, 1),
@@ -159,7 +207,71 @@ namespace BitLottery.Business.UnitTests
               .ReturnsAsync(expectedRandomNumbers);
 
             // Act
-            Ballot result = await Lottery.SellBallotAsync(expectedDraw);
+            Ballot result = await Lottery.SellBallotAsync(expectedDraw, lastNumber);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Number.Should().Be(expectedBallotNumber);
+            result.SellDate.Should().Be(expectedSellDate);
+
+            actualGenerationSettings.Should().NotBeNull();
+            actualGenerationSettings.NumberOfIntegers.Should().Be(1);
+            actualGenerationSettings.MinimalIntValue.Should().Be(0);
+            actualGenerationSettings.MaximumIntValue.Should().Be(2);
+
+            RandomGeneratorMock.VerifyAll();
+        }
+
+        [TestMethod]
+        public async Task SellBallotAsync_WithLastNumber_PicksRandomBallotRegistersAsSold()
+        {
+            // Arrange
+            int expectedRandomNumber = 2;
+            var expectedRandomNumbers = new List<int> { expectedRandomNumber };
+            int expectedBallotNumber = 123456789;
+            DateTime expectedSellDate = new DateTime(2017, 12, 25);
+
+            SystemTime.SetDateTime(expectedSellDate);
+
+            var expectedBallots = new List<Ballot>
+            {
+                new Ballot
+                {
+                    Number = 225
+                },
+                new Ballot
+                {
+                    Number = 339
+                },
+                new Ballot
+                {
+                    Number = 229
+                },
+                new Ballot
+                {
+                    Number = expectedBallotNumber
+                }
+            };
+
+            int? lastNumber = 9;
+
+            var expectedDraw = new Draw
+            {
+                SellUntilDate = new DateTime(2018, 1, 1),
+                Ballots = expectedBallots
+            };
+
+            GenerationSettings actualGenerationSettings = null;
+            RandomGeneratorMock
+              .Setup(mock => mock.GenerateRandomNumbersAsync(It.IsAny<GenerationSettings>()))
+              .Callback((GenerationSettings generationSettings) =>
+              {
+                  actualGenerationSettings = generationSettings;
+              })
+              .ReturnsAsync(expectedRandomNumbers);
+
+            // Act
+            Ballot result = await Lottery.SellBallotAsync(expectedDraw, lastNumber);
 
             // Assert
             result.Should().NotBeNull();

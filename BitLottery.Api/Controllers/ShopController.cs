@@ -1,4 +1,5 @@
 using BitLottery.Api.Controllers.Interfaces;
+using BitLottery.Api.Models;
 using BitLottery.Business;
 using BitLottery.Database.Interfaces;
 using BitLottery.Models;
@@ -26,17 +27,19 @@ namespace BitLottery.Api.Controllers
             _ballotRepository = ballotRepository;
         }
 
-        [HttpPut("buyBallot/{drawNumber}")]
-        public async Task<int> SellBallotAsync(int customerNumber, int drawNumber)
+        [HttpPut]
+        public async Task<int> SellBallotAsync(SaleInfo saleInfo)
         {
-            Draw draw = _drawRepository.Get(drawNumber);
-            Customer customer = _customerRepository.Get(customerNumber);
+            Draw draw = _drawRepository.Get(saleInfo.DrawNumber);
+            Customer customer = _customerRepository.Get(saleInfo.CustomerNumber);
 
-            Ballot soldBallot = await _lottery.SellBallotAsync(draw);
+            Ballot soldBallot = await _lottery.SellBallotAsync(draw, saleInfo.LastNumber);
+
             customer.AddBallot(soldBallot);
             _ballotRepository.Update(soldBallot, soldBallot.Id);
             _customerRepository.Update(customer, customer.Number);
-            return soldBallot.Number;
+
+            return soldBallot.Id;
         }
     }
 }

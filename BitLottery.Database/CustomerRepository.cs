@@ -32,7 +32,7 @@ namespace BitLottery.Database
         public Customer Get(int key)
         {
             Customer foundCustomer = _context.Customers
-                .SingleOrDefault(customer => customer.Id == key);
+                .SingleOrDefault(customer => customer.Number == key);
 
             if(foundCustomer == null)
             {
