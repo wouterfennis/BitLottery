@@ -10,20 +10,20 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BitLottery.Database.Migrations
 {
     [DbContext(typeof(BitLotteryContext))]
-    [Migration("20180908124632_InitialCreate")]
+    [Migration("20181118173909_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.2-rtm-30932")
+                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("Relational:Sequence:shared.CustomerNumbers", "'CustomerNumbers', 'shared', '1000', '2', '', '', 'Int32', 'False'")
                 .HasAnnotation("Relational:Sequence:shared.DrawNumbers", "'DrawNumbers', 'shared', '1000', '1', '', '', 'Int32', 'False'")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("BitLottery.Models.Ballot", b =>
+            modelBuilder.Entity("BitLottery.Entities.Models.Ballot", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -33,11 +33,11 @@ namespace BitLottery.Database.Migrations
 
                     b.Property<int?>("DrawId");
 
-                    b.Property<bool>("IsWinner");
-
                     b.Property<int>("Number");
 
                     b.Property<DateTime?>("SellDate");
+
+                    b.Property<int?>("WonPriceId");
 
                     b.HasKey("Id");
 
@@ -45,10 +45,12 @@ namespace BitLottery.Database.Migrations
 
                     b.HasIndex("DrawId");
 
+                    b.HasIndex("WonPriceId");
+
                     b.ToTable("Ballots");
                 });
 
-            modelBuilder.Entity("BitLottery.Models.Customer", b =>
+            modelBuilder.Entity("BitLottery.Entities.Models.Customer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -65,7 +67,7 @@ namespace BitLottery.Database.Migrations
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("BitLottery.Models.Draw", b =>
+            modelBuilder.Entity("BitLottery.Entities.Models.Draw", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -84,14 +86,44 @@ namespace BitLottery.Database.Migrations
                     b.ToTable("Draws");
                 });
 
-            modelBuilder.Entity("BitLottery.Models.Ballot", b =>
+            modelBuilder.Entity("BitLottery.Entities.Models.Price", b =>
                 {
-                    b.HasOne("BitLottery.Models.Customer")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("Amount");
+
+                    b.Property<int?>("DrawId");
+
+                    b.Property<int>("PriceType");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DrawId");
+
+                    b.ToTable("Prices");
+                });
+
+            modelBuilder.Entity("BitLottery.Entities.Models.Ballot", b =>
+                {
+                    b.HasOne("BitLottery.Entities.Models.Customer")
                         .WithMany("Ballots")
                         .HasForeignKey("CustomerId");
 
-                    b.HasOne("BitLottery.Models.Draw")
+                    b.HasOne("BitLottery.Entities.Models.Draw")
                         .WithMany("Ballots")
+                        .HasForeignKey("DrawId");
+
+                    b.HasOne("BitLottery.Entities.Models.Price", "WonPrice")
+                        .WithMany()
+                        .HasForeignKey("WonPriceId");
+                });
+
+            modelBuilder.Entity("BitLottery.Entities.Models.Price", b =>
+                {
+                    b.HasOne("BitLottery.Entities.Models.Draw")
+                        .WithMany("Prices")
                         .HasForeignKey("DrawId");
                 });
 #pragma warning restore 612, 618

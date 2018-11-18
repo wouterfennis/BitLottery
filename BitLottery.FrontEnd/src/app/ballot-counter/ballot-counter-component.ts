@@ -30,11 +30,6 @@ export class BallotCounterComponent implements OnChanges{
         let startHundreds = Math.floor((number / 100) %10);        
         let startThousands = Math.floor(number / 1000);
 
-        console.log(startOnes);
-        console.log(startTens);
-        console.log(startHundreds);
-        console.log(startThousands);
-
         let counter : Counter = {
             ones: startOnes,
             tens: startTens,

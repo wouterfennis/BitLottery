@@ -28,6 +28,7 @@ namespace BitLottery.Api.Controllers
         }
 
         [HttpPut]
+        [Route("/action/sell")]
         public async Task<int> SellBallotAsync(SaleInfo saleInfo)
         {
             Draw draw = _drawRepository.Get(saleInfo.DrawNumber);

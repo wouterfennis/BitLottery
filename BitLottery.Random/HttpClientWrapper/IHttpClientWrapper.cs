@@ -8,6 +8,9 @@ namespace BitLottery.RandomService.HttpClientWrapper
     /// </summary>
     public interface IHttpClientWrapper
     {
+        /// <summary>
+        /// Wrapper for the PostAsync method
+        /// </summary>
         Task<HttpResponseMessage> PostAsync(string requestUri, HttpContent content);
     }
 }
