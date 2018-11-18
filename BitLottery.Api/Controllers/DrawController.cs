@@ -4,6 +4,7 @@ using BitLottery.Controllers.Interfaces;
 using BitLottery.Database.Interfaces;
 using BitLottery.Entities.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace BitLottery.Api.Controllers
@@ -28,7 +29,17 @@ namespace BitLottery.Api.Controllers
         [HttpPost]
         public async Task<int> GenerateDraw(DrawConfiguration drawConfiguration)
         {
-            Draw draw = await _lottery.GenerateDrawAsync(drawConfiguration.SellUntilDate, drawConfiguration.NumberOfBallots);
+            IEnumerable<Ballot> ballots = await _lottery.GenerateBallotsAsync(drawConfiguration.NumberOfBallots);
+
+            var draw = new Draw
+            {
+                SellUntilDate = drawConfiguration.SellUntilDate,
+                Ballots = ballots
+            };
+
+            draw.AddPrice(PriceType.Main, drawConfiguration.MainPriceAmount);
+            draw.AddPrice(PriceType.FinalDigit, drawConfiguration.FinalNumberPriceAmount);
+
             int drawNumber = _drawRepository.Insert(draw);
             return drawNumber;
         }
@@ -44,9 +55,7 @@ namespace BitLottery.Api.Controllers
         public async Task DrawWinsAsync(int drawNumber)
         {
             Draw draw = _drawRepository.Get(drawNumber);
-            Ballot winningBallot = await _lottery.DrawWinsAsync(draw);
-            winningBallot.RegisterAsWinner();
-            _ballotRepository.Update(winningBallot, winningBallot.Id);
+            draw = await _lottery.DrawWinsAsync(draw);
             _drawRepository.Update(draw, draw.Number);
         }
     }

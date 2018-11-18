@@ -23,9 +23,9 @@ namespace BitLottery.Entities.Models
         public int Number { get; set; }
 
         /// <summary>
-        /// Is this ballot the winner of the draw
+        /// The price this ballot has won
         /// </summary>
-        public bool IsWinner { get; set; }
+        public Price WonPrice { get; set; }
 
         /// <summary>
         /// Registers this ballot as sold
@@ -36,11 +36,12 @@ namespace BitLottery.Entities.Models
         }
 
         /// <summary>
-        /// Registers this ballot as the winner
+        /// Extracts last digit of number
         /// </summary>
-        public void RegisterAsWinner()
+        /// <returns>The last digit of the number</returns>
+        public int GetLastDigit()
         {
-            IsWinner = true;
+            return Number % 10;
         }
     }
 }

@@ -1,4 +1,3 @@
-using BitLottery.Entities.Models;
 using BitLottery.Utilities.SystemTime;
 using System;
 using System.Collections.Generic;
@@ -49,6 +48,17 @@ namespace BitLottery.Entities.Models
             Prices = new List<Price>();
         }
 
+        public void AddPrice(PriceType priceType, decimal amount)
+        {
+            var price = new Price
+            {
+                PriceType = priceType,
+                Amount = amount
+            };
+
+            Prices.Add(price);
+        }
+
         /// <summary>
         /// Searches for unsold ballots
         /// </summary>
@@ -66,12 +76,7 @@ namespace BitLottery.Entities.Models
         public IEnumerable<Ballot> GetUnsoldBallots(int lastNumber)
         {
             var unsoldBallots = GetUnsoldBallots();
-            return unsoldBallots.Where(ballot => GetLastDigit(ballot.Number) == lastNumber).ToList();
-        }
-
-        private int GetLastDigit(int number)
-        {
-            return number % 10;
+            return unsoldBallots.Where(ballot => ballot.GetLastDigit() == lastNumber).ToList();
         }
 
         /// <summary>
@@ -81,6 +86,35 @@ namespace BitLottery.Entities.Models
         public IEnumerable<Ballot> GetSoldBallots()
         {
             return Ballots.Where(ballot => ballot.SellDate.HasValue).ToList();
+        }
+
+        /// <summary>
+        /// Searches for sold ballots with a specific last number
+        /// </summary>
+        /// <param name="lastNumber">The lastnumber</param>
+        /// <returns>All sold ballots with the same lastnumber</returns>
+        public IEnumerable<Ballot> GetSoldBallots(int lastNumber)
+        {
+            var soldBallots = GetSoldBallots();
+            return soldBallots.Where(ballot => ballot.GetLastDigit() == lastNumber).ToList();
+        }
+
+        /// <summary>
+        /// Searches for the main prices
+        /// </summary>
+        /// <returns>The main price</returns>
+        public Price GetMainPrice()
+        {
+            return Prices.Single(price => price.PriceType == PriceType.Main);
+        }
+
+        /// <summary>
+        /// Retrieves the final digit price
+        /// </summary>
+        /// <returns>The final digit price</returns>
+        public Price GetFinalDigitPrice()
+        {
+            return Prices.Single(price => price.PriceType == PriceType.FinalDigit);
         }
 
         /// <summary>

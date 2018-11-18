@@ -8,9 +8,9 @@ namespace BitLottery.Entities.Models
     public class Price
     {
         [Key]
-        public int id { get; set; }
+        public int Id { get; set; }
 
-        public int Number { get; set; }
+        public PriceType PriceType { get; set; }
 
         public decimal Amount { get; set; }
     }

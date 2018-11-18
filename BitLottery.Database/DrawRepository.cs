@@ -33,6 +33,7 @@ namespace BitLottery.Database
         {
             Draw foundDraw = _context.Draws
                 .Include(draw => draw.Ballots)
+                .Include(draw => draw.Prices)
                 .SingleOrDefault(draw => draw.Number == key);
 
             if (foundDraw == null)

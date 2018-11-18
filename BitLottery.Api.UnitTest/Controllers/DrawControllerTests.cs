@@ -8,6 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BitLottery.Api.UnitTests
@@ -37,24 +38,29 @@ namespace BitLottery.Api.UnitTests
             DateTime expectedSellUntilDate = new DateTime(2018, 1, 1);
             int expectedNumberOfBallots = 10;
             int expectedNumber = 222;
-            var expectedDraw = new Draw
-            {
-                Number = expectedNumber,
-                SellUntilDate = expectedSellUntilDate,
-                Ballots = new List<Ballot>()
-            };
+            var expectedBallots = new List<Ballot>();
+            int expectedMainPriceAmount = 10000;
+            int expectedFinalNumberPriceAmount = 5;
 
             lotteryMock
-              .Setup(mock => mock.GenerateDrawAsync(expectedSellUntilDate, expectedNumberOfBallots))
-              .ReturnsAsync(expectedDraw);
+              .Setup(mock => mock.GenerateBallotsAsync(expectedNumberOfBallots))
+              .ReturnsAsync(expectedBallots);
 
-            drawRepositoryMock.Setup(mock => mock.Insert(expectedDraw))
+            Draw actualDraw = null;
+
+            drawRepositoryMock.Setup(mock => mock.Insert(It.IsAny<Draw>()))
+                .Callback((Draw draw) =>
+                {
+                    actualDraw = draw;
+                })
               .Returns(expectedNumber);
 
             var drawConfiguration = new DrawConfiguration
             {
                 SellUntilDate = expectedSellUntilDate,
-                NumberOfBallots = expectedNumberOfBallots
+                NumberOfBallots = expectedNumberOfBallots,
+                MainPriceAmount = expectedMainPriceAmount,
+                FinalNumberPriceAmount = expectedFinalNumberPriceAmount
             };
 
             // Act
@@ -62,6 +68,19 @@ namespace BitLottery.Api.UnitTests
 
             // Assert
             result.Should().Be(expectedNumber);
+
+            actualDraw.Should().NotBeNull();
+            actualDraw.SellUntilDate.Should().Be(expectedSellUntilDate);
+            actualDraw.Ballots.Should().Equal(expectedBallots);
+
+            actualDraw.Prices.Should().HaveCount(2);
+            var firstPrice = actualDraw.Prices.ElementAt(0);
+            firstPrice.PriceType.Should().Be(PriceType.Main);
+            firstPrice.Amount.Should().Be(expectedMainPriceAmount);
+
+            var secondPrice = actualDraw.Prices.ElementAt(1);
+            secondPrice.PriceType.Should().Be(PriceType.FinalDigit);
+            secondPrice.Amount.Should().Be(expectedFinalNumberPriceAmount);
 
             lotteryMock.VerifyAll();
             drawRepositoryMock.VerifyAll();

@@ -6,5 +6,7 @@ namespace BitLottery.Api.Models
     {
         public DateTime SellUntilDate { get; set; }
         public int NumberOfBallots { get; set; }
+        public decimal MainPriceAmount { get; set; }
+        public decimal FinalNumberPriceAmount { get; set; }
     }
 }

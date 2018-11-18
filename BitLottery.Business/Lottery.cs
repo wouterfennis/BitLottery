@@ -4,7 +4,6 @@ using BitLottery.Business.RandomWrapper;
 using BitLottery.Entities.Models;
 using BitLottery.Utilities.SystemTime;
 using Microsoft.Extensions.Configuration;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -39,19 +38,7 @@ namespace BitLottery.Business
         }
 
         /// </inheritdoc>
-        public async Task<Draw> GenerateDrawAsync(DateTime sellUntilDate, int numberOfBallots)
-        {
-            IEnumerable<Ballot> ballots = await GenerateBallotsAsync(numberOfBallots);
-            var draw = new Draw
-            {
-                SellUntilDate = sellUntilDate,
-                Ballots = ballots
-            };
-
-            return draw;
-        }
-
-        private async Task<IEnumerable<Ballot>> GenerateBallotsAsync(int numberOfBallots)
+        public async Task<IEnumerable<Ballot>> GenerateBallotsAsync(int numberOfBallots)
         {
             int seed = await generateSeedAsync();
 
@@ -152,17 +139,29 @@ namespace BitLottery.Business
             }
         }
 
-        public async Task<Ballot> DrawWinsAsync(Draw draw)
+        public async Task<Draw> DrawWinsAsync(Draw draw)
         {
             DetermineDrawCanBeDrawn(draw);
             IEnumerable<Ballot> soldBallots = draw.GetSoldBallots();
 
             int randomIndex = await GenerateRandomNumberAsync(0, soldBallots.Count() - 1);
 
-            var pickedBallot = soldBallots.ElementAt(randomIndex);
-            pickedBallot.RegisterAsWinner();
+            Ballot pickedBallot = soldBallots.ElementAt(randomIndex);
+            Price mainPrice = draw.GetMainPrice();
+            pickedBallot.WonPrice = mainPrice;
+
+            Price finalDigitPrice = draw.GetFinalDigitPrice();
+            IEnumerable<Ballot> finalDigitsBallots = draw.GetSoldBallots(pickedBallot.GetLastDigit());
+            foreach (var wonBallot in finalDigitsBallots)
+            {
+                if (wonBallot.Number != pickedBallot.Number)
+                {
+                    wonBallot.WonPrice = finalDigitPrice;
+                }
+            }
+
             draw.RegisterAsDrawn();
-            return pickedBallot;
+            return draw;
         }
 
         private void DetermineDrawCanBeDrawn(Draw draw)

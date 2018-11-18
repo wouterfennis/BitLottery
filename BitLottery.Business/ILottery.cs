@@ -1,5 +1,6 @@
 using BitLottery.Entities.Models;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace BitLottery.Business
@@ -7,9 +8,9 @@ namespace BitLottery.Business
     public interface ILottery
     {
         /// <summary>
-        /// Generate and persist a new draw
+        /// Generates a list of ballots
         /// </summary>
-        Task<Draw> GenerateDrawAsync(DateTime drawDate, int numberOfBallots);
+        Task<IEnumerable<Ballot>> GenerateBallotsAsync(int numberOfBallots);
 
         /// <summary>
         /// Picks a random ballot from a Draw and registers it as sold
@@ -19,6 +20,6 @@ namespace BitLottery.Business
         /// <summary>
         /// Pics a random ballot from a Draw and registers it as winning
         /// </summary>
-        Task<Ballot> DrawWinsAsync(Draw draw);
+        Task<Draw> DrawWinsAsync(Draw draw);
     }
 }

@@ -38,24 +38,19 @@ namespace BitLottery.Entities.UnitTests.Models
         }
 
         [TestMethod]
-        public void RegisterAsWinner_ChangeStatusToWinner()
+        public void GetLastDigit_ReturnsLastDigitOfNumber()
         {
             // Arrange
             var ballot = new Ballot
             {
-                Id = 1,
                 Number = 1234,
-                SellDate = new DateTime(2018, 1, 1)
             };
 
             // Act
-            ballot.RegisterAsWinner();
+            var result = ballot.GetLastDigit();
 
             // Assert
-            ballot.Id.Should().Be(ballot.Id);
-            ballot.Number.Should().Be(ballot.Number);
-            ballot.SellDate.Should().Be(ballot.SellDate);
-            ballot.IsWinner.Should().BeTrue();
+            result.Should().Be(4);
         }
     }
 }
