@@ -106,7 +106,7 @@ namespace BitLottery.Api.UnitTests.Controllers
             int result = await shopController.SellBallotAsync(expectedSaleInfo);
 
             // Assert
-            result.Should().Be(expectedBallot.Id);
+            result.Should().Be(expectedBallot.Number);
 
             expectedCustomer.Ballots.Count.Should().Be(1);
             var firstBallot = expectedCustomer.Ballots.Single();

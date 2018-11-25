@@ -3,10 +3,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
-
 import { AppComponent } from './app.component';
 import { BallotCounterComponent } from './ballot-counter/ballot-counter-component';
-import { BallotsComponent } from './ballots/ballots.component';
+import { ProductsComponent } from './products/products.component';
 import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
@@ -15,6 +14,7 @@ import { NavbarShopcartComponent } from './shared/navbar/navbar-shopcart/navbar-
 import { NavLoginComponent } from './shared/navbar/navbar-login/navbar-login.component';
 import { CarouselComponent } from './shared/carousel/carousel.component';
 import { FooterComponent } from './shared/footer/footer.component';
+import { BuyBallotsComponent } from './buy-ballots/buy-ballots.component';
 
 const appRoutes: Routes = [
   { 
@@ -25,6 +25,10 @@ const appRoutes: Routes = [
   {
     path: 'shopping-cart',
     component: ShoppingCartComponent,
+  },
+  {
+    path: 'buy-ballots',
+    component: BuyBallotsComponent,
   },
   { path: '',
     redirectTo: '/home',
@@ -38,10 +42,11 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     BallotCounterComponent,
-    BallotsComponent,    
+    ProductsComponent,    
     HomeComponent,
     PageNotFoundComponent,
     ShoppingCartComponent,
+    BuyBallotsComponent,
     NavbarComponent,
     NavbarShopcartComponent,
     NavLoginComponent,

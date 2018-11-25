@@ -15,6 +15,6 @@ export class HomeComponent implements OnInit{
     
     ngOnInit() { 
         console.log("test");
-        this.customerService.getCustomer(1);
+        this.customerService.getCustomer(1000);
     }
 }

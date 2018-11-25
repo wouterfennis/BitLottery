@@ -70,6 +70,11 @@ namespace BitLottery.Api
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "BitLottery API");
             });
 
+            app.UseCors(csp =>
+            {
+                csp.AllowAnyOrigin();
+            });
+
             app.UseMvc();
         }
     }

@@ -40,7 +40,7 @@ namespace BitLottery.Api.Controllers
             _ballotRepository.Update(soldBallot, soldBallot.Id);
             _customerRepository.Update(customer, customer.Number);
 
-            return soldBallot.Id;
+            return soldBallot.Number;
         }
     }
 }
